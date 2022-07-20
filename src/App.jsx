@@ -1,8 +1,12 @@
+import { Routes, Route } from "react-router-dom";
+import LoginApp from "./Apps/Login/Login";
+
+
 const App = () => {
   return (
-    <div className="App">
-      <h1>Hello World</h1>
-    </div>
+    <Routes>
+      <Route path='/login' element={<LoginApp />} />
+    </Routes>
   );
 }
 
