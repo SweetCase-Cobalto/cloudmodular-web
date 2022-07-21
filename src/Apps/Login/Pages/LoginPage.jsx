@@ -6,10 +6,10 @@ import { useCookies } from "react-cookie";
 
 import Form from "react-bootstrap/Form";
 
-import { Desktop, Mobile } from "../../../Components/common/ScreenResponsive";
-import { CloudModularColor } from "../../../Variables/color";
-import { AccessedButton } from "../../../Components/common/Buttons";
-import LogoImg from "../../../Asset/logo-colored.png";
+import { Desktop, Mobile } from "../../../components/common/ScreenResponsive";
+import { CloudModularColor } from "../../../variables/color";
+import { AccessedButton } from "../../../components/common/Buttons";
+import LogoImg from "../../../asset/logo-colored.png";
 
 const LoginPage = () => {
 

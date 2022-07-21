@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CloudModularColor } from "../../Variables/color";
+import { CloudModularColor } from "../../variables/color";
 
 export const AccessedButton = styled.button`
     padding: 7px 10px 7px 10px;
