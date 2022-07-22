@@ -14,9 +14,7 @@ import LogoImg from "../../../asset/logo-colored.png";
 const LoginPage = () => {
 
     let inputed_passwd, inputed_email;
-
     const [, setCookie, ] = useCookies(['token', 'user_id']);
-
     const loginHandler = (e) => {
         e.preventDefault();
         // 이메일/비밀번호 매칭 후 토큰 발급 받기

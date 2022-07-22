@@ -2,15 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
+import { Provider } from 'react-redux';
+
 import App from './App';
+import { legacy_createStore as createStore } from 'redux';
+import rootReducer from './reducers';
+
+// redux store
+const reduxStore = createStore(rootReducer);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <CookiesProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </CookiesProvider>
+  
+  <Provider store={reduxStore}>
+    <CookiesProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </CookiesProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
