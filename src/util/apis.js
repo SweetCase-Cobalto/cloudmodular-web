@@ -11,7 +11,27 @@ export const getUserInfoByID = async (token, userId) => {
         return {err: 200, data: res.data}
     }).catch((err) => {
         if(err.code === 401)        return {err: 401, data: "권한이 없습니다."};
-        else if(err.code === 404)    return {err: 404, data: "없는 사용자 입니다."};
+        else if(err.code === 404)   return {err: 404, data: "없는 사용자 입니다."};
+        else                        return {err: 500, data: "server error"};
+    });
+    return data;
+}
+
+export const getDataInfoByID = async(token, userId, dataId) => {
+    // ID를 이용해 데이터정보 조회
+    let server_url = process.env.REACT_APP_SERVER_URL;
+    let data = await axios({
+        method: 'get',
+        url: `${server_url}/api/users/${userId}/datas/${dataId}`,
+        headers: {'token': token},
+        params: {"method": "info"},
+    })
+    .then((res) => {
+        return {err: 200, data: res.data};
+    })
+    .catch((err) => {
+        if(err.code === 401)        return {err: 401, data: "권한이 없습니다."};
+        else if(err.code === 404)   return {err: 404, data: "해당 데이터가 존재하지 않습니다."};
         else                        return {err: 500, data: "server error"};
     });
     return data;
@@ -31,10 +51,10 @@ export const getDataListByRoot = async (token, userName, rootId) => {
             'sort_name': 1,
         }
     }).then((res) => {
-        return {err: 200, data: res.data}
+        return {err: 200, data: res.data};
     }).catch((err) => {
         if(err.code === 401)        return {err: 401, data: "권한이 없습니다."};
-        else if(err.code === 404)    return {err: 404, data: "없는 사용자 입니다."};
+        else if(err.code === 404)   return {err: 404, data: "없는 사용자 입니다."};
         else                        return {err: 500, data: "server error"};
     });
     return data;

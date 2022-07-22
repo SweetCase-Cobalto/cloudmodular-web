@@ -3,11 +3,12 @@ const UPDATE_IDXS = "STORAGERESULT/UPDATE_IDXS";
 
 const initialState = {
     isFetched: false,
+    rootName: null,
     selectedIdxs: [],
     dataList: [],
 }
 
-export const updateCurrentStorageList = (newList) => {
+export const updateCurrentStorageList = (newList, rootName) => {
     let arr = newList.map((e) => {
         return {
             id: e["id"],
@@ -19,6 +20,7 @@ export const updateCurrentStorageList = (newList) => {
     })
     return {
         type: UPDATE_LIST,
+        rootName: rootName,
         dataList: arr,
     }
 }
@@ -36,6 +38,7 @@ export const storageResult = (state = initialState, action) => {
             return {
                 ...state,
                 isFetched: true,
+                rootName: action.rootName,
                 dataList: action.dataList,
                 selectedIdxs: [],
             }
