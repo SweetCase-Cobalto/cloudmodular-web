@@ -1,8 +1,8 @@
 import axios from "axios";
 
+let serverUrl = process.env.REACT_APP_SERVER_URL;
 export const getUserInfoByID = async (token, userId) => {
     // UserID를 이용한 데이터 가져오기
-    let serverUrl = process.env.REACT_APP_SERVER_URL;
     let data = await axios({
         method: 'get',
         url: `${serverUrl}/api/users/${userId}`,
@@ -17,7 +17,6 @@ export const getUserInfoByID = async (token, userId) => {
 
 export const getDataInfoByID = async(token, userId, dataId) => {
     // ID를 이용해 데이터정보 조회
-    let serverUrl = process.env.REACT_APP_SERVER_URL;
     let data = await axios({
         method: 'get',
         url: `${serverUrl}/api/users/${userId}/datas/${dataId}`,
@@ -35,7 +34,6 @@ export const getDataInfoByID = async(token, userId, dataId) => {
 
 export const getDataListByRoot = async (token, userName, rootId) => {
     // 데이터 검색이 아닌 해당 루트에 존재하는 데이터를 가져올 때 사용
-    let serverUrl = process.env.REACT_APP_SERVER_URL;
     let data = await axios({
         method: 'get',
         url: `${serverUrl}/api/search/datas`,
@@ -49,6 +47,22 @@ export const getDataListByRoot = async (token, userName, rootId) => {
     }).then((res) => {
         return {err: 200, data: res.data};
     }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
+
+export const createDirectory = async (token, userId, directoryId, directoryName) => {
+    // 디렉토리 생성
+    let data = await axios({
+        method: "post",
+        url: `${serverUrl}/api/users/${userId}/datas/${directoryId}`,
+        headers: {'token': token, 'Content-Type': 'application/json' },
+        data: JSON.stringify({dirname: directoryName})
+    }).then((res) => {
+        return {err: 201, data: res.data};
+    }).catch((err) => {
+        console.log(err.response);
         return {err: err.response.status, data: err.response.statusText};
     });
     return data;

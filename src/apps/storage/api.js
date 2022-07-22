@@ -23,7 +23,3 @@ export const receiveDataForStoragePage = async (token, userId, rootId) => {
     res.storages = dirData.data;
     return res;
 }
-
-export const createDirectory = async (token, userId, rootId, directoryName) => {
-    
-}
