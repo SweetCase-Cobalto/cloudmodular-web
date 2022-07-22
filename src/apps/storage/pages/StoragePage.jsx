@@ -40,9 +40,9 @@ const StoragePage = () => {
             } else {
                 // 오류
                 // 401접근 권한일 경우 login으로 쫓아내기
-                alert(res.data);
-                if(res.err === 401)
+                if(res.err === 401 || res.err === 422)
                     window.location.replace('/login');
+                alert(res.data);
             }
         })
     } else {
@@ -63,8 +63,8 @@ const StoragePage = () => {
                     <title>{currentDir.rootName}</title>
                 </Helmet>
                 <Desktop>
-                    <DesktopLayer>
-                        <h1>Storage</h1>
+                    <DesktopLayer style={{paddingTop: "50px"}}>
+                        <h2>Storage</h2>
                     </DesktopLayer>
                 </Desktop>
                 <Mobile>

@@ -10,9 +10,7 @@ export const getUserInfoByID = async (token, userId) => {
     }).then((res) => {
         return {err: 200, data: res.data}
     }).catch((err) => {
-        if(err.code === 401)        return {err: 401, data: "권한이 없습니다."};
-        else if(err.code === 404)   return {err: 404, data: "없는 사용자 입니다."};
-        else                        return {err: 500, data: "server error"};
+        return {err: err.response.status, data: err.response.statusText};
     });
     return data;
 }
@@ -30,9 +28,7 @@ export const getDataInfoByID = async(token, userId, dataId) => {
         return {err: 200, data: res.data};
     })
     .catch((err) => {
-        if(err.code === 401)        return {err: 401, data: "권한이 없습니다."};
-        else if(err.code === 404)   return {err: 404, data: "해당 데이터가 존재하지 않습니다."};
-        else                        return {err: 500, data: "server error"};
+        return {err: err.response.status, data: err.response.statusText};
     });
     return data;
 }
@@ -53,9 +49,7 @@ export const getDataListByRoot = async (token, userName, rootId) => {
     }).then((res) => {
         return {err: 200, data: res.data};
     }).catch((err) => {
-        if(err.code === 401)        return {err: 401, data: "권한이 없습니다."};
-        else if(err.code === 404)   return {err: 404, data: "없는 사용자 입니다."};
-        else                        return {err: 500, data: "server error"};
+        return {err: err.response.status, data: err.response.statusText};
     });
     return data;
 }
