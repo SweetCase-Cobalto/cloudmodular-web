@@ -1,10 +1,11 @@
 import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
 import { useCookies } from "react-cookie";
 
 import { receiveDataForStoragePage } from "../api";
 import { useDispatch, useSelector } from "react-redux";
 import { updateMyAccount } from "../../../reducers/myAccount";
+import { updateCurrentStorageList } from "../../../reducers/storageResult";
+
 
 const StoragePage = () => {
     const [searchParams, ] = useSearchParams(); // Query Params
@@ -13,7 +14,9 @@ const StoragePage = () => {
     let rootId = searchParams.get('id');   // 검색 대상의 디렉토리 아이디
 
     const myAccount = useSelector(state => state.myAccount);
-    if(myAccount.name === null) {
+    const dirList = useSelector(status => status.storageResult);
+
+    if(!dirList.isFetched) {
         /*
          * 데이터 로드가 안되어 있는 경우
          * 서버로부터 데이터를 받아온다.
@@ -30,6 +33,7 @@ const StoragePage = () => {
             if(res.err === 200) {
                 // Redux에 해당 데이터 저장
                 dispatch(updateMyAccount(res.user));
+                dispatch(updateCurrentStorageList(res.storages));
             } else {
                 // 오류
                 alert(res.data);
@@ -38,7 +42,7 @@ const StoragePage = () => {
         })
     }
 
-    if(myAccount.name === null) {
+    if(!dirList.isFetched) {
         return (
             <div>
                 <h1>Loading</h1>

@@ -10,10 +10,11 @@ import rootReducer from './reducers';
 
 // redux store
 const reduxStore = createStore(rootReducer);
+// redux saga
+// run saga middleware
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  
   <Provider store={reduxStore}>
     <CookiesProvider>
       <BrowserRouter>
