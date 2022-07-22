@@ -7,6 +7,7 @@ import { updateMyAccount } from "../../../reducers/myAccount";
 import { updateCurrentStorageList } from "../../../reducers/storageResult";
 import { Helmet } from "react-helmet";
 import Header from "../../../components/common/Header";
+import { Desktop, DesktopLayer, MobileLayer, Mobile } from "../../../components/common/ScreenResponsive";
 
 
 const StoragePage = () => {
@@ -38,8 +39,10 @@ const StoragePage = () => {
                 dispatch(updateCurrentStorageList(res.storages, res.rootName));
             } else {
                 // 오류
+                // 401접근 권한일 경우 login으로 쫓아내기
                 alert(res.data);
-                window.location.replace('/login');
+                if(res.err === 401)
+                    window.location.replace('/login');
             }
         })
     } else {
@@ -59,6 +62,16 @@ const StoragePage = () => {
                 <Helmet>
                     <title>{currentDir.rootName}</title>
                 </Helmet>
+                <Desktop>
+                    <DesktopLayer>
+                        <h1>Storage</h1>
+                    </DesktopLayer>
+                </Desktop>
+                <Mobile>
+                    <MobileLayer>
+
+                    </MobileLayer>
+                </Mobile>
             </div>
         )
     }

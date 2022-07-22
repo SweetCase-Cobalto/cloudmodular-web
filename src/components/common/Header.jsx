@@ -3,10 +3,19 @@ import styled from "styled-components";
 import { Nav, Navbar, Container, Form } from "react-bootstrap";
 import { Desktop, Mobile} from './ScreenResponsive';
 import { CloudModularColor } from "../../variables/color";
+import { useCookies } from "react-cookie";
 import WhiteLogoImg from "../../asset/logo-white.png";
 import "../fonts.css";
 
 const Header = () => {
+
+    const [, , removeCookie] = useCookies(['token', 'user_id']);
+
+    const logoutEvent = () => {
+        removeCookie("token");
+        removeCookie("user_id");
+        window.location.replace('/login');
+    }
 
     return (
         <NavLayer>
@@ -49,7 +58,7 @@ const Header = () => {
                             />
                         </Form>
                     </Container>
-                    <Nav.Link href="/storage?id=0">Logout</Nav.Link>
+                    <Nav.Link onClick={logoutEvent}>Logout</Nav.Link>
                 </Navbar>
             </Desktop>
             <Mobile>
