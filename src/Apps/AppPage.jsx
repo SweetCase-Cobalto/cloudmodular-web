@@ -7,7 +7,10 @@ const AppPage = () => {
     if(token === undefined)
         // 없을 경우 로그인 페이지로
         window.location.replace('/login');
-    return <div>ok</div>
+    else
+        // 있으면 Storage로 이동
+        window.location.replace('/storage?id=0');
+    return <div>Loading</div>
 }
 
 export default AppPage;

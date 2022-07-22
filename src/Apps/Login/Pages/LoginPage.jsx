@@ -15,7 +15,7 @@ const LoginPage = () => {
 
     let inputed_passwd, inputed_email;
 
-    const [, setCookie, ] = useCookies(['token']);
+    const [, setCookie, ] = useCookies(['token', 'user_id']);
 
     const loginHandler = (e) => {
         e.preventDefault();
@@ -34,13 +34,16 @@ const LoginPage = () => {
         })
         .then((res) => {
             let token = res.data.token;
-
+            let user_id = res.data.user_id;
             // 만료시각 설정
             let expired_len = Number(process.env.REACT_APP_TOKEN_EXPIRED);
             let expired = new Date();
             expired.setDate(expired.getDate() + expired_len);
-            setCookie('token', token, { path: '/', expires: expired})
-            window.location.replace('/');
+            // 쿠키 저장
+            setCookie('token', token, { path: '/', expires: expired});
+            setCookie('user_id', user_id, {path: '/', expires: expired});
+            // Storage Page로 이동
+            window.location.replace('/storage?id=0');
             // Cookie로 저장
         }).catch((e) => {
             // 에러 발생
