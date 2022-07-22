@@ -2,10 +2,10 @@ import axios from "axios";
 
 export const getUserInfoByID = async (token, userId) => {
     // UserID를 이용한 데이터 가져오기
-    let server_url = process.env.REACT_APP_SERVER_URL;
+    let serverUrl = process.env.REACT_APP_SERVER_URL;
     let data = await axios({
         method: 'get',
-        url: `${server_url}/api/users/${userId}`,
+        url: `${serverUrl}/api/users/${userId}`,
         headers: {'token': token},
     }).then((res) => {
         return {err: 200, data: res.data}
@@ -17,10 +17,10 @@ export const getUserInfoByID = async (token, userId) => {
 
 export const getDataInfoByID = async(token, userId, dataId) => {
     // ID를 이용해 데이터정보 조회
-    let server_url = process.env.REACT_APP_SERVER_URL;
+    let serverUrl = process.env.REACT_APP_SERVER_URL;
     let data = await axios({
         method: 'get',
-        url: `${server_url}/api/users/${userId}/datas/${dataId}`,
+        url: `${serverUrl}/api/users/${userId}/datas/${dataId}`,
         headers: {'token': token},
         params: {"method": "info"},
     })
@@ -35,10 +35,10 @@ export const getDataInfoByID = async(token, userId, dataId) => {
 
 export const getDataListByRoot = async (token, userName, rootId) => {
     // 데이터 검색이 아닌 해당 루트에 존재하는 데이터를 가져올 때 사용
-    let server_url = process.env.REACT_APP_SERVER_URL;
+    let serverUrl = process.env.REACT_APP_SERVER_URL;
     let data = await axios({
         method: 'get',
-        url: `${server_url}/api/search/datas`,
+        url: `${serverUrl}/api/search/datas`,
         headers: {'token': token},
         params: {
             'user': userName,

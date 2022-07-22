@@ -1,15 +1,26 @@
 import { useSearchParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
 
 import { receiveDataForStoragePage } from "../api";
-import { useDispatch, useSelector } from "react-redux";
 import { updateMyAccount } from "../../../reducers/myAccount";
 import { updateCurrentStorageList } from "../../../reducers/storageResult";
 import { Helmet } from "react-helmet";
 import Header from "../../../components/common/Header";
 import { Desktop, DesktopLayer, MobileLayer, Mobile } from "../../../components/common/ScreenResponsive";
+import { MainFullLine } from "../../../components/common/Lines";
+import { RootTag } from "../../../components/common/Tags";
+import StorageListComponent from "../components/StorageListComponent";
+import { Title, SubTitle } from "../../../components/common/Titles";
+import RootTagComponent from "../components/RootTagComponent";
 
-
+const rootToSplitedRoot = (rootName) => {
+    const splitedRootName = rootName.split("/");
+    splitedRootName.pop();
+    splitedRootName.pop();
+    splitedRootName.unshift("/");
+    return splitedRootName;
+}
 const StoragePage = () => {
     const [searchParams, ] = useSearchParams(); // Query Params
     const [cookie, , ] = useCookies(['token', 'user_id']);
@@ -45,8 +56,6 @@ const StoragePage = () => {
                 alert(res.data);
             }
         })
-    } else {
-        // 컴포넌트 생성
     }
     // 렌더링
     if(!currentDir.isFetched) {
@@ -56,6 +65,10 @@ const StoragePage = () => {
             </div>
         )
     } else {
+
+        // Root에 대한 태그 리스트 생성
+        const splitedRootName = rootToSplitedRoot(currentDir.rootName);
+        const RootTags = splitedRootName.map((e, i) => <RootTag key={i} name={e}/>);
         return (
             <div>
                 <Header />
@@ -64,12 +77,14 @@ const StoragePage = () => {
                 </Helmet>
                 <Desktop>
                     <DesktopLayer style={{paddingTop: "50px"}}>
-                        <h2>Storage</h2>
+                        <Title>Storage</Title>
+                        <MainFullLine />
+                        <RootTagComponent />
+                        <StorageListComponent />
                     </DesktopLayer>
                 </Desktop>
                 <Mobile>
                     <MobileLayer>
-
                     </MobileLayer>
                 </Mobile>
             </div>

@@ -13,8 +13,10 @@ export const Mobile = ({ children }) => {
 export const DesktopLayer = styled.div`
     padding-left: 300px;
     padding-right: 300px;
+    font-family: 'Noto Sans KR', sans-serif;
 `;
 export const MobileLayer = styled.div`
     padding-left: 30px;
     padding-right: 30px;
+    font-family: 'Noto Sans KR', sans-serif;
 `;
