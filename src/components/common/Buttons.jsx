@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { CloudModularColor } from "../../variables/color";
 
-const COLOR_ACCESS_CLICK = "#092E0D";
-const COLOR_ACCESS_OUTLINED_CLICK = "#D8EFDB";
-const COLOR_DANGER_OUTLINED_CLICK = "#FFDFEA";
+const COLOR_ACCESS_HOVER = "#092E0D";
+const COLOR_CANCELED_HOVER = "#3c3c3c";
+const COLOR_ACCESS_OUTLINED_HOVER = "#D8EFDB";
+const COLOR_DANGER_OUTLINED_HOVER = "#FFDFEA";
+
 
 export const AccessedButton = styled.button`
     padding: 7px 10px 7px 10px;
@@ -13,7 +15,7 @@ export const AccessedButton = styled.button`
     border-radius: 5px;
 
     &:hover {
-        background-color: ${COLOR_ACCESS_CLICK};
+        background-color: ${COLOR_ACCESS_HOVER};
     }
 `;
 export const AccessedOutlinedButton = styled.button`
@@ -24,7 +26,7 @@ export const AccessedOutlinedButton = styled.button`
     border-radius: 5px;
 
     &:hover {
-        background-color: ${COLOR_ACCESS_OUTLINED_CLICK};
+        background-color: ${COLOR_ACCESS_OUTLINED_HOVER};
     }
 `;
 export const DangerOutlinedButton = styled.button`
@@ -34,6 +36,17 @@ export const DangerOutlinedButton = styled.button`
     border: 1px ${CloudModularColor.DANGER} solid;
     border-radius: 5px;
     &:hover {
-        background-color: ${COLOR_DANGER_OUTLINED_CLICK};
+        background-color: ${COLOR_DANGER_OUTLINED_HOVER};
     }
 `;
+export const CanceledButton = styled.button`
+    padding: 7px 10px 7px 10px;
+    background-color: ${CloudModularColor.GRAY_BOLD};
+    color: white;
+    border: none;
+    border-radius: 5px;
+
+    &:hover {
+        background-color: ${COLOR_CANCELED_HOVER};
+    }
+`

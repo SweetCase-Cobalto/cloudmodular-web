@@ -1,7 +1,7 @@
 import { Form, Modal } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { useSearchParams } from "react-router-dom";
-import { AccessedButton } from "../../../components/common/Buttons";
+import { AccessedButton, CanceledButton } from "../../../components/common/Buttons";
 import { createDirectory } from "../../../util/apis";
 
 const CreateDirectoryModal = (props) => {
@@ -40,6 +40,7 @@ const CreateDirectoryModal = (props) => {
             </Modal.Body>
             <Modal.Footer>
                 <AccessedButton onClick={buttnOnClickHandler}>만들기</AccessedButton>
+                <CanceledButton onClick={props.onHide}>취소</CanceledButton>
             </Modal.Footer>
         </Modal>
     );

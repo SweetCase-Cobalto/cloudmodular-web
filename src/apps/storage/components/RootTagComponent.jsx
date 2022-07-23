@@ -6,7 +6,7 @@ import { SubTitle } from "../../../components/common/Titles";
 const rootToSplitedRoot = (rootName) => {
     const splitedRootName = rootName.split("/");
     splitedRootName.pop();
-    splitedRootName.pop();
+    splitedRootName.shift();
     splitedRootName.unshift("/");
     return splitedRootName;
 }

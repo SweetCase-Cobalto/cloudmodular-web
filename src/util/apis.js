@@ -62,8 +62,21 @@ export const createDirectory = async (token, userId, directoryId, directoryName)
     }).then((res) => {
         return {err: 201, data: res.data};
     }).catch((err) => {
-        console.log(err.response);
         return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
+
+export const removeData = async (token, userId, dataId) => {
+    // 데이터 삭제
+    let data = await axios({
+        method: "delete",
+        url: `${serverUrl}/api/users/${userId}/datas/${dataId}`,
+        headers: {"token": token}
+    }).then(() => {
+        return {err: 204}
+    }).catch((err) => {
+        return {err: err.response.status, message: err.response.statusText};
     });
     return data;
 }

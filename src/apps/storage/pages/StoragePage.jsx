@@ -9,9 +9,8 @@ import { Helmet } from "react-helmet";
 import Header from "../../../components/common/Header";
 import { Desktop, DesktopLayer, MobileLayer, Mobile } from "../../../components/common/ScreenResponsive";
 import { MainFullLine } from "../../../components/common/Lines";
-import { RootTag } from "../../../components/common/Tags";
 import StorageListComponent from "../components/StorageListComponent";
-import { Title, SubTitle } from "../../../components/common/Titles";
+import { Title } from "../../../components/common/Titles";
 import RootTagComponent from "../components/RootTagComponent";
 
 const rootToSplitedRoot = (rootName) => {
@@ -65,10 +64,6 @@ const StoragePage = () => {
             </div>
         )
     } else {
-
-        // Root에 대한 태그 리스트 생성
-        const splitedRootName = rootToSplitedRoot(currentDir.rootName);
-        const RootTags = splitedRootName.map((e, i) => <RootTag key={i} name={e}/>);
         return (
             <div>
                 <Header />
@@ -85,6 +80,10 @@ const StoragePage = () => {
                 </Desktop>
                 <Mobile>
                     <MobileLayer>
+                        <Title>Storage</Title>
+                        <MainFullLine />
+                        <RootTagComponent />
+                        <StorageListComponent />
                     </MobileLayer>
                 </Mobile>
             </div>

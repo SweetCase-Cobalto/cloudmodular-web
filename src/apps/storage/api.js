@@ -14,8 +14,8 @@ export const receiveDataForStoragePage = async (token, userId, rootId) => {
     else {
         let rootInfo = await getDataInfoByID(token, userId, rootId);
         if(rootInfo.err !== 200) return rootInfo;
-        if(!rootInfo.is_dir) return {err: 404, data: "해당 데이터가 존재하지 않습니다."};
-        res.rootName = `${rootInfo.data.root}/${rootInfo.data.name}/`
+        if(!rootInfo.data.is_dir) return {err: 404, data: "해당 데이터가 존재하지 않습니다."};
+        res.rootName = `${rootInfo.data.root}${rootInfo.data.name}/`
     }
     // Directory From Root
     let dirData = await getDataListByRoot(token, res.user.name, rootId);
