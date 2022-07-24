@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux"
-import styled from "styled-components";
 import { RootTag } from "../../../components/common/Tags";
 import { SubTitle } from "../../../components/common/Titles";
 
@@ -13,8 +12,18 @@ const rootToSplitedRoot = (rootName) => {
 
 const RootTagComponent = () => {
     const currentDir = useSelector(state => state.storageResult);
+    let tmpRoot = "";
     const RootTags = rootToSplitedRoot(currentDir.rootName)
-        .map((name, index) => <RootTag key={index} name={name} />);
+        .map((name, index) => {
+            if(index === 0) {
+                tmpRoot = "/";
+                return <RootTag key={index} name={name} />
+            } else {
+                let root = tmpRoot;
+                tmpRoot += (name + "/")
+                return <RootTag key={index} name={name} root={root} />
+            }
+        })
     return (
         <div style={{ marginTop: "30px" }}>
             <SubTitle>현재 위치</SubTitle>

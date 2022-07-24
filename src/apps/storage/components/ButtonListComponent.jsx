@@ -11,7 +11,7 @@ const ButtonListComponent = () => {
     const [removeDataModalShow, setRemoveDataModalShow] = useState(false);
 
     return (
-        <div style={{display: "flex", marginTop: "20px", marginBottom: "40px"}}>
+        <div style={{display: "flex", marginTop: "20px", marginBottom: "20px"}}>
             <AccessedButton style={{ marginRight: "10px" }}>파일 업로드</AccessedButton>
             <AccessedButton style={{ marginRight: "10px" }} onClick={() => setCreateDirectoryModalShow(true)}>폴더 만들기</AccessedButton>
             <AccessedOutlinedButton style={{marginRight: "10px"}}>기타 작업</AccessedOutlinedButton>

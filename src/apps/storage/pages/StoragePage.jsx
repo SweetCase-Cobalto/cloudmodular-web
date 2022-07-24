@@ -13,20 +13,13 @@ import StorageListComponent from "../components/StorageListComponent";
 import { Title } from "../../../components/common/Titles";
 import RootTagComponent from "../components/RootTagComponent";
 
-const rootToSplitedRoot = (rootName) => {
-    const splitedRootName = rootName.split("/");
-    splitedRootName.pop();
-    splitedRootName.pop();
-    splitedRootName.unshift("/");
-    return splitedRootName;
-}
 const StoragePage = () => {
     const [searchParams, ] = useSearchParams(); // Query Params
     const [cookie, , ] = useCookies(['token', 'user_id']);
     const dispatch = useDispatch();  // Redux
     let rootId = searchParams.get('id');   // 검색 대상의 디렉토리 아이디
     // redux data
-    const myAccount = useSelector(state => state.myAccount);
+    // const myAccount = useSelector(state => state.myAccount);
     const currentDir = useSelector(state => state.storageResult);
     // data for components
     if(!currentDir.isFetched) {

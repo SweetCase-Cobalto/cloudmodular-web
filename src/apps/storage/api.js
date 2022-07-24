@@ -1,3 +1,4 @@
+import axios from "axios";
 import { getUserInfoByID, getDataListByRoot, getDataInfoByID } from "../../util/apis"
 
 export const receiveDataForStoragePage = async (token, userId, rootId) => {
@@ -22,4 +23,38 @@ export const receiveDataForStoragePage = async (token, userId, rootId) => {
     if(dirData.err !== 200) return dirData;
     res.storages = dirData.data;
     return res;
+}
+
+export const getDirectoryIDForMoveByTag = async (token, user, root, name) => {
+    // 태그 클릭시 해당 태그에 대한 위치로 이동
+    // 이때 name, root를 이용해서 먼저 데이터의 ID부터 검색한다.
+    let serverUrl = process.env.REACT_APP_SERVER_URL;
+    let data = await axios({
+        method: "get",
+        url: `${serverUrl}/api/search/datas`,
+        headers: {"token": token},
+        params: {
+            "user": user,
+            "root": root,
+            "word": name,
+        }
+    }).then((res) => {
+        // 찾기
+        // root/name과 일치하는 데이터가 없을 수 있음
+        let id = -1;
+        res.data.forEach(data => {
+            if((data.name === name) && data.is_dir) {
+                id = data.id;
+                return false;
+            }
+        });
+        if(id === -1)
+            // 못찾음
+            return {err: 404, data: "해당 폴더는 존재하지 않습니다."};
+        else
+            return {err: 200, data: {id: id}};
+    }).catch((err) => {
+        return {err: err.response.status, message: err.response.statusText};
+    });
+    return data;
 }

@@ -1,6 +1,7 @@
 import { Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux"
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
+import styled from "styled-components";
 
 import { selectData, unselectData } from "../../../reducers/storageResult";
 import DirectoryIcon from "../../../asset/directory.svg";
@@ -24,9 +25,13 @@ const StorageListItem = (props) => {
     const selectIdx = () => dispatch(selectData(selectedIdxs, idx));
     const unselectIdx = () => dispatch(unselectData(selectedIdxs, idx));
 
+    const moveEvent = () => {
+        window.location.href = `/storage?id=${data.id}`;
+    }
+
     return (
         <tr>
-            <td style={{ display: "flex" }}>
+            <td style={{ display: "flex"}}>
                 {
                     selectedIdxs.has(idx)
                     &&
@@ -43,8 +48,9 @@ const StorageListItem = (props) => {
                         id={data.id} onChange={unselectIdx}
                     />
                 }
-                <img height="20px" style={{ marginRight: "5px" }} alt="data icon" src={dataIcon} />
-                {data.name}
+                <img height="20px" style={{ marginRight: "5px", cursor: "pointer" }}
+                    alt="data icon" src={dataIcon} onClick={moveEvent} />
+                <span style={{cursor: "pointer"}} onClick={moveEvent}>{data.name}</span>
             </td>
             <td style={{ fontSize: "0.8em" }}>{data.created}</td>
             <td><FavoriteIcon /></td>
@@ -52,5 +58,9 @@ const StorageListItem = (props) => {
     );
 }
 
+const ItemLayer = styled.tr`
+    background-color: white;
+    
+`
 
 export default StorageListItem;
