@@ -32,18 +32,18 @@ export const updateCurrentStorageList = (newList, rootName) => {
     }
 }
 
-export const selectData = (ids, i) => {
-    ids.add(i);
+export const selectData = (idxs, i) => {
+    idxs.add(i);
     return {
         type: UPDATE_SELECTED,
-        selectedIdxs: ids
+        selectedIdxs: idxs
     }
 }
-export const unselectData = (ids, i) => {
-    if(ids.has(i)) ids.delete(i);
+export const unselectData = (idxs, i) => {
+    if(idxs.has(i)) idxs.delete(i);
     return {
         type: UPDATE_SELECTED,
-        selectedIdxs: ids
+        selectedIdxs: idxs
     }
 }
 export const initSelected = () => {

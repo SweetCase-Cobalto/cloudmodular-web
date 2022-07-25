@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { AccessedButton, CanceledButton, DangerOutlinedButton } from "../../../components/common/Buttons";
-import { useSearchParams } from "react-router-dom";
 
 const RemoveDataModal = (props) => {
     const currentDir = useSelector(state => state.storageResult);

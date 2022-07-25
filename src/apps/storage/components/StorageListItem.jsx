@@ -37,7 +37,7 @@ const StorageListItem = (props) => {
                     &&
                     <Form.Check
                         type="checkbox" style={{ marginRight: "10px" }}
-                        id={data.id} onChange={selectIdx} checked
+                        id={data.id} onChange={unselectIdx} checked
                     />
                 }
                 {
@@ -45,7 +45,7 @@ const StorageListItem = (props) => {
                     &&
                     <Form.Check
                         type="checkbox" style={{ marginRight: "10px" }}
-                        id={data.id} onChange={unselectIdx}
+                        id={data.id} onChange={selectIdx}
                     />
                 }
                 <img height="20px" style={{ marginRight: "5px", cursor: "pointer" }}
