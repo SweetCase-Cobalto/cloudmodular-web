@@ -26,11 +26,15 @@ const StorageListItem = (props) => {
     const unselectIdx = () => dispatch(unselectData(selectedIdxs, idx));
 
     const moveEvent = () => {
-        window.location.href = `/storage?id=${data.id}`;
+        if(data.isDir)
+            window.location.href = `/storage?id=${data.id}`;
+        else {
+            // TODO 파일의 형태에 따라 보여주는 창이 다를 예정
+        }
     }
 
     return (
-        <tr>
+        <ItemLayer>
             <td style={{ display: "flex"}}>
                 {
                     selectedIdxs.has(idx)
@@ -54,7 +58,7 @@ const StorageListItem = (props) => {
             </td>
             <td style={{ fontSize: "0.8em" }}>{data.created}</td>
             <td><FavoriteIcon /></td>
-        </tr>
+        </ItemLayer>
     );
 }
 
