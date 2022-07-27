@@ -97,3 +97,18 @@ export const removeData = async (token, userId, dataId) => {
     });
     return data;
 }
+
+export const changeDataName = async (token, userId, dataId, newName) => {
+
+    let data = await axios({
+        method: "patch",
+        url: `${serverUrl}/api/users/${userId}/datas/${dataId}`,
+        headers: {'token': token, 'Content-Type': 'application/json' },
+        data: JSON.stringify({name: newName})
+    }).then((res) => {
+        return {err: 200, data: res.data};
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}

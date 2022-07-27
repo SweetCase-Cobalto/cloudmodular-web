@@ -11,8 +11,7 @@ export const Mobile = ({ children }) => {
 }
 
 export const DesktopLayer = styled.div`
-    padding-left: 300px;
-    padding-right: 300px;
+    width: 100%;
     font-family: 'Noto Sans KR', sans-serif;
 `;
 export const MobileLayer = styled.div`

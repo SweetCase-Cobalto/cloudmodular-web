@@ -12,6 +12,8 @@ import { MainFullLine } from "../../../components/common/Lines";
 import StorageListComponent from "../components/StorageListComponent";
 import { Title } from "../../../components/common/Titles";
 import RootTagComponent from "../components/RootTagComponent";
+import { DesktopCenterLayer, DesktopLeftLayer, DesktopRightLayer } from "../../../components/common/Layers";
+import FileStatusComponent from "../components/FileStatusComponent";
 
 const StoragePage = () => {
     const [searchParams, ] = useSearchParams(); // Query Params
@@ -64,12 +66,20 @@ const StoragePage = () => {
                     <title>{currentDir.rootName}</title>
                 </Helmet>
                 <Desktop>
-                    <DesktopLayer style={{paddingTop: "50px"}}>
-                        <Title>Storage</Title>
-                        <MainFullLine />
-                        <RootTagComponent />
-                        <StorageListComponent />
-                    </DesktopLayer>
+                    <div style={{ display: "flex" }}>
+                        <DesktopLeftLayer />
+                        <DesktopCenterLayer>
+                            <DesktopLayer style={{paddingTop: "50px"}}>
+                                <Title>Storage</Title>
+                                <MainFullLine />
+                                <RootTagComponent />
+                                <StorageListComponent />
+                            </DesktopLayer>             
+                        </DesktopCenterLayer>    
+                        <DesktopRightLayer>
+                            <FileStatusComponent />
+                        </DesktopRightLayer>
+                    </div>
                 </Desktop>
                 <Mobile>
                     <MobileLayer>
