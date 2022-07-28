@@ -1,15 +1,32 @@
 import { useSelector } from "react-redux/es/exports";
 import styled from "styled-components";
+import fileDownload from "js-file-download";
 
 import FileOnlyImage from "../../../asset/file.svg";
 import DirectoryOnlyImage from "../../../asset/directory.svg";
 import FilesImage from "../../../asset/selectedFilesImg.svg";
 import DirectoriesImage from "../../../asset/selectedDirectoriesImg.svg";
 import FilesAndDirectoriesImage from "../../../asset/selectedFilesAndDirectoriesImg.svg";
-import { AccessedOutlinedButton } from "../../../components/common/Buttons";
+import { AccessedButton, AccessedOutlinedButton } from "../../../components/common/Buttons";
 import ChangeDataNameModal from "./ChangeDataNameModal";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
+import { downloadData } from "../../../util/apis";
 
+const downloadEvent = (token, userId, fileData) => {
+    downloadData(token, userId, fileData.id)
+    .then((res) => {
+        if(res.err === 200) {
+            // 다운로드
+            const response = res.data;
+            if(!fileData.isDir) fileDownload(response, fileData.name);
+            else fileDownload(response, `${fileData.name}.zip`);
+        } else {
+            // 에러
+            alert(res.data)
+        }
+    })
+}
 
 const FileStatusNoSelected = () => {
     // 아무것도 선택되지 않은 경우
@@ -21,14 +38,16 @@ const FileStatusNoSelected = () => {
 
 const FileStatusOneSelected = () => {
     // 하나 선택한 경우
+    const [cookie, ,] = useCookies(["token", "user_id"]);
     const currentDir = useSelector(state => state.storageResult);
     const selectedIdxs = currentDir.selectedIdxs;
     const targetIdx = Array.from(selectedIdxs)[0];
     const targetFile = currentDir.dataList[targetIdx];
-
+    const sharedId = currentDir.sharedId;
+    // Image
     const ImageComponent = targetFile.isDir ? DirectoryOnlyImage : FileOnlyImage;
     const altMsg = targetFile.isDir ? "directory" : "file";
-
+    // Modals
     const [changeDataNameModalShow, setChangeDataNameModalShow] = useState(false);
 
     return (
@@ -43,6 +62,12 @@ const FileStatusOneSelected = () => {
                 >
                     이름 변경
                 </AccessedOutlinedButton>
+                <AccessedButton
+                    style={{ width: "100%", "marginTop": "10px" }}
+                    onClick={() => downloadEvent(cookie.token, cookie.user_id, targetFile)}
+                >
+                    다운로드
+                </AccessedButton>
             </center>
 
             <ChangeDataNameModal

@@ -84,6 +84,21 @@ export const uploadFile = async (token, userId, directoryId, file) => {
     return data;
 }
 
+export const downloadData = async (token, userId, dataId) => {
+    let data = await axios({
+        method: "get",
+        url: `${serverUrl}/api/users/${userId}/datas/${dataId}`,
+        headers: {token: token},
+        params: {method: "download"},
+        responseType: "blob"
+    }).then((res) => {
+        return {err: 200, data: new Blob([res.data])};
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
+
 export const removeData = async (token, userId, dataId) => {
     // 데이터 삭제
     let data = await axios({
