@@ -47,7 +47,7 @@ const Header = () => {
                             <Nav.Link href="/storage?id=0">Storage</Nav.Link>
                             <Nav.Link href="/storage/favorite">Favorites</Nav.Link>
                             <Nav.Link href="/storage?id=0">Settings</Nav.Link>
-                            <Nav.Link href="/storage?id=0">Search</Nav.Link>
+                            <Nav.Link href="/storage/search">Search</Nav.Link>
                         </Nav>
                         <Form className='d-flex'>
                             <Form.Control

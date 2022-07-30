@@ -1,6 +1,7 @@
 const UPDATE_LIST = "STORAGERESULT/UPDATE_LIST";
 const UPDATE_SELECTED = "STORAGERESULT/UPDATE_SELECTED";
 const INIT_SELECTED = "STORAGERESULT/INIT_SELECTED";
+const SET_EMPTY_DATALIST = "STORAGERESULT/SET_EMPTY_DATALIST";
 
 const initialState = {
     isFetched: false,
@@ -50,6 +51,10 @@ export const initSelected = () => {
     return { type: INIT_SELECTED};
 }
 
+export const setDataEmpty = () => {
+    return { type: SET_EMPTY_DATALIST};
+}
+
 export const storageResult = (state = initialState, action) => {
     switch(action.type) {
         case UPDATE_LIST:
@@ -69,6 +74,11 @@ export const storageResult = (state = initialState, action) => {
             return {
                 ...state,
                 selectedIdxs: new Set(),
+            }
+        case SET_EMPTY_DATALIST:
+            return {
+                ...initialState,
+                isFetched: true,
             }
         default:
             return state;

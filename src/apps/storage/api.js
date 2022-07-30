@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getUserInfoByID, getDataListByRoot, getDataInfoByID, getFavoriteDatas } from "../../util/apis"
+import { getUserInfoByID, getDataListByRoot, getDataInfoByID, getFavoriteDatas, searchData } from "../../util/apis"
 
 export const receiveDataForStoragePage = async (token, userId, rootId) => {
     // root_id를 0에서 시작
@@ -35,6 +35,33 @@ export const receiveDataForFavoritePage = async (token, userId) => {
     let result = await getFavoriteDatas(token, userData.data.name);
     if(result.err !== 200) return result;   // Error occur
     res.storages = result.data;
+    return res;
+}
+
+export const receiveDataForSearchPage = async (token, userId, params) => {
+    // 데이터 검색
+    const res = {err: 200};
+    // userInfo
+    let userData = await getUserInfoByID(token, userId);
+    if(userData.err !== 200) return userData;
+    res.user = userData.data;
+    // get Data List
+    if(Object.keys(params).length === 0) {
+        // 파리미터 업음 => Header에서 바로 Search로 접속하는 경우
+        // 비어있는 리스트로 출력
+        res.storages = []
+    } else {
+        // user가 없는 경우 자기 자신을 검색한다
+        if(!('user' in params))
+            params.user = res.user.name;
+        // root가 없는 경우 최상위 루트로 잡는다.
+        if(!('root' in params))
+            params.root = '/';
+        // 데이터 검색
+        let dirData = await searchData(token, params);
+        if(dirData.err !== 200) return dirData;
+        res.storages = dirData.data;
+    }
     return res;
 }
 

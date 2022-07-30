@@ -227,3 +227,18 @@ export const getFavoriteDatas = async (token, userName) => {
     });
     return data;
 }
+
+export const searchData = async (token, params) => {
+    console.log(params);
+    let data = await axios({
+        method: "get",
+        url: `${serverUrl}/api/search/datas`,
+        headers: {token: token},
+        params: {...params}
+    }).then((res) => {
+        return {err: 200, data: res.data};
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
