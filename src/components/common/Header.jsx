@@ -17,6 +17,21 @@ const Header = () => {
         window.location.replace('/login');
     }
 
+    const searchBarEvent = (e) => {
+        e.preventDefault();
+        const searchWord = e.target.searchWord.value;
+        if(searchWord === '') {
+            alert('검색어를 입력하세요.');
+            return;
+        }
+        let url = `/storage/search?`;
+        url += '&sort_create=1';
+        url += '&sort_name=1';
+        url += '&recursive=1';
+        url += '&word=' + searchWord;
+        window.location.href = url;
+    }
+
     return (
         <NavLayer>
             <Desktop>
@@ -49,12 +64,13 @@ const Header = () => {
                             <Nav.Link href="/storage?id=0">Settings</Nav.Link>
                             <Nav.Link href="/storage/search">Search</Nav.Link>
                         </Nav>
-                        <Form className='d-flex'>
+                        <Form className='d-flex' onSubmit={searchBarEvent}>
                             <Form.Control
                                 type="search"
                                 placeholder="Search"
                                 className="me-2"
                                 aria-label="Search"
+                                id="searchWord"
                             />
                         </Form>
                     </Container>
