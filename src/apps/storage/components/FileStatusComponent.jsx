@@ -7,11 +7,12 @@ import DirectoryOnlyImage from "../../../asset/directory.svg";
 import FilesImage from "../../../asset/selectedFilesImg.svg";
 import DirectoriesImage from "../../../asset/selectedDirectoriesImg.svg";
 import FilesAndDirectoriesImage from "../../../asset/selectedFilesAndDirectoriesImg.svg";
-import { AccessedButton, AccessedOutlinedButton } from "../../../components/common/Buttons";
+import { AccessedButton, AccessedOutlinedButton, DangerOutlinedButton } from "../../../components/common/Buttons";
 import ChangeDataNameModal from "./ChangeDataNameModal";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-import { downloadData } from "../../../util/apis";
+import { downloadData, setSharingToData } from "../../../util/apis";
+import { Modal } from "react-bootstrap";
 
 const downloadEvent = (token, userId, fileData) => {
     downloadData(token, userId, fileData.id)
@@ -43,12 +44,79 @@ const FileStatusOneSelected = () => {
     const selectedIdxs = currentDir.selectedIdxs;
     const targetIdx = Array.from(selectedIdxs)[0];
     const targetFile = currentDir.dataList[targetIdx];
-    const sharedId = currentDir.sharedId;
+    const sharedId = parseInt(targetFile.sharedId);
     // Image
     const ImageComponent = targetFile.isDir ? DirectoryOnlyImage : FileOnlyImage;
     const altMsg = targetFile.isDir ? "directory" : "file";
     // Modals
     const [changeDataNameModalShow, setChangeDataNameModalShow] = useState(false);
+
+    const CheckSharedModal = (props) => {
+
+        return (
+            <Modal
+                {...props}
+                aria-labelledby="contained-modal-title-vcenter"
+            >
+                <Modal.Header closeButton>
+                    파일 공유 링크
+                </Modal.Header>
+                <Modal.Body>
+
+                </Modal.Body>
+            </Modal>
+        );
+    }
+
+    // 공유 관련 컴포넌트
+    const SharedComponent = () => {
+        const [checkSharedModalShow, setCheckSharedModalShow] = useState(false);
+        if(sharedId === -1) {
+            // 공유 필요
+            const shareEvent = () => {
+                setSharingToData(cookie.token, cookie.user_id, targetFile.id)
+                .then((res) => {
+                    if(res.err === 201) {
+                        alert("공유가 설정되었습니다.");
+                        window.location.reload();
+                    } else {
+                        alert(res.data);
+                    }
+                });
+            }
+            return (
+                <AccessedButton
+                    style={{ width: "100%", "marginTop": "10px" }}
+                    onClick={shareEvent}
+                >
+                    공유하기
+                </AccessedButton>
+            );
+        } else {
+            return (
+            <div
+                style={{ width: "100%", "marginTop": "10px", display: "flex" }}
+            >
+                <AccessedOutlinedButton
+                    style={{ width: "50%", marginRight: "10px" }}
+                    onClick={() => setCheckSharedModalShow(true)}
+                >
+                    공유 URL 확인하기
+                </AccessedOutlinedButton>
+                <DangerOutlinedButton
+                    style={{ width: "50%" }}
+                >
+                    공유 해제하기
+                </DangerOutlinedButton>
+
+                <CheckSharedModal
+                    show={checkSharedModalShow}
+                    onHide={() => setCheckSharedModalShow(false)}
+                />
+            </div>
+            );
+        }
+    }
 
     return (
         <Layer>
@@ -62,6 +130,7 @@ const FileStatusOneSelected = () => {
                 >
                     이름 변경
                 </AccessedOutlinedButton>
+                <SharedComponent />
                 <AccessedButton
                     style={{ width: "100%", "marginTop": "10px" }}
                     onClick={() => downloadEvent(cookie.token, cookie.user_id, targetFile)}

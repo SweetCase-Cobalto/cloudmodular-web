@@ -92,7 +92,34 @@ export const downloadData = async (token, userId, dataId) => {
         params: {method: "download"},
         responseType: "blob"
     }).then((res) => {
-        return {err: 200, data: new Blob([res.data])};
+        return {err: 200, data: res};
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
+
+export const getInfoSharedDataBySharedId = async (sharedId) => {
+    // Shared ID로 Shared File/Directory 정보 가지고 오기
+    let data = await axios({
+        method: "get",
+        url: `${serverUrl}/api/datas/shares/${sharedId}/info`
+    }).then((res) => {
+        return {err: 200, data: res.data};
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
+
+export const downloadShared = async (sharedId) => {
+    // 공유 데이터 다운로드
+    let data = await axios({
+        method: "get",
+        url: `${serverUrl}/api/datas/shares/${sharedId}/download`,
+        responseType: "blob"
+    }).then((res) => {
+        return {err: 200, data: res}
     }).catch((err) => {
         return {err: err.response.status, data: err.response.statusText};
     });
@@ -104,7 +131,7 @@ export const removeData = async (token, userId, dataId) => {
     let data = await axios({
         method: "delete",
         url: `${serverUrl}/api/users/${userId}/datas/${dataId}`,
-        headers: {"token": token}
+        headers: {token: token}
     }).then(() => {
         return {err: 204}
     }).catch((err) => {
@@ -114,7 +141,7 @@ export const removeData = async (token, userId, dataId) => {
 }
 
 export const changeDataName = async (token, userId, dataId, newName) => {
-
+    // 데이터 이름 변경
     let data = await axios({
         method: "patch",
         url: `${serverUrl}/api/users/${userId}/datas/${dataId}`,
@@ -122,6 +149,20 @@ export const changeDataName = async (token, userId, dataId, newName) => {
         data: JSON.stringify({name: newName})
     }).then((res) => {
         return {err: 200, data: res.data};
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
+
+export const setSharingToData = async (token, userId, dataId) => {
+    // 데이터 공유
+    let data = await axios({
+        method: "post",
+        url: `${serverUrl}/api/users/${userId}/datas/${dataId}/shares`,
+        headers: {"token": token}
+    }).then((res) => {
+        return {err: 201, data: {sharedId: res.data.shared_id}}
     }).catch((err) => {
         return {err: err.response.status, data: err.response.statusText};
     });
