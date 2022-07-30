@@ -45,7 +45,7 @@ const Header = () => {
                         </Navbar.Brand>
                         <Nav className="me-auto">
                             <Nav.Link href="/storage?id=0">Storage</Nav.Link>
-                            <Nav.Link href="/storage?id=0">Favorites</Nav.Link>
+                            <Nav.Link href="/storage/favorite">Favorites</Nav.Link>
                             <Nav.Link href="/storage?id=0">Settings</Nav.Link>
                             <Nav.Link href="/storage?id=0">Search</Nav.Link>
                         </Nav>

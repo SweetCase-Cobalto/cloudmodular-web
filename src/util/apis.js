@@ -207,3 +207,23 @@ export const unSetDataFavorite = async (token, userId, dataId) => {
     });
     return data;
 }
+
+export const getFavoriteDatas = async (token, userName) => {
+    let data = await axios({
+        method: "get",
+        url: `${serverUrl}/api/search/datas`,
+        headers: {token: token},
+        params: {
+            user: userName,
+            root_id: 0,
+            recursive: 1,
+            sort_name: 1,
+            favorite: 1,
+        }
+    }).then((res) => {
+        return {err: 200, data: res.data};
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}

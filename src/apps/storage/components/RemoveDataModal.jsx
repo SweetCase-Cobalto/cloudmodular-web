@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useSearchParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Modal, ModalBody, ProgressBar } from "react-bootstrap";
 import { useSelector } from "react-redux";
@@ -9,7 +8,6 @@ import { removeData } from "../../../util/apis";
 
 const RemoveDataModal = (props) => {
     const currentDir = useSelector(state => state.storageResult);
-    const [searchParams, ] = useSearchParams(); // Query Params
     const [cookie, ,] = useCookies(['token', 'user_id']);   // 쿠키
     const idxs = currentDir.selectedIdxs;   // 삭제 대상의 리스트 인덱스들
     const dataList = currentDir.dataList;   // 데이터 정보 리스트: 여기에서 ID값을 빼내옴
@@ -66,8 +64,7 @@ const RemoveDataModal = (props) => {
         // idxs 초기화
         const onHideEvent = () => {
             // Reload Browser
-            let rootId = searchParams.get('id');   // 검색 대상의 디렉토리 아이디
-            window.location.replace(`/storage?id=${rootId}`);
+            window.location.reload();
         }
         return (
             <Modal

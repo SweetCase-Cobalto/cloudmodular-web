@@ -14,6 +14,8 @@ import { Title } from "../../../components/common/Titles";
 import RootTagComponent from "../components/RootTagComponent";
 import { DesktopCenterLayer, DesktopLeftLayer, DesktopRightLayer } from "../../../components/common/Layers";
 import FileStatusComponent from "../components/FileStatusComponent";
+import ButtonListComponent from "../components/ButtonListComponent";
+
 
 const StoragePage = () => {
     const [searchParams, ] = useSearchParams(); // Query Params
@@ -21,7 +23,6 @@ const StoragePage = () => {
     const dispatch = useDispatch();  // Redux
     let rootId = searchParams.get('id');   // 검색 대상의 디렉토리 아이디
     // redux data
-    // const myAccount = useSelector(state => state.myAccount);
     const currentDir = useSelector(state => state.storageResult);
     // data for components
     if(!currentDir.isFetched) {
@@ -73,6 +74,7 @@ const StoragePage = () => {
                                 <Title>Storage</Title>
                                 <MainFullLine />
                                 <RootTagComponent />
+                                <ButtonListComponent />
                                 <StorageListComponent />
                             </DesktopLayer>             
                         </DesktopCenterLayer>    

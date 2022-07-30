@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getUserInfoByID, getDataListByRoot, getDataInfoByID } from "../../util/apis"
+import { getUserInfoByID, getDataListByRoot, getDataInfoByID, getFavoriteDatas } from "../../util/apis"
 
 export const receiveDataForStoragePage = async (token, userId, rootId) => {
     // root_id를 0에서 시작
@@ -22,6 +22,19 @@ export const receiveDataForStoragePage = async (token, userId, rootId) => {
     let dirData = await getDataListByRoot(token, res.user.name, rootId);
     if(dirData.err !== 200) return dirData;
     res.storages = dirData.data;
+    return res;
+}
+
+export const receiveDataForFavoritePage = async (token, userId) => {
+    const res = {err: 200};
+    // UserInfo
+    let userData = await getUserInfoByID(token, userId);
+    if(userData.err !== 200) return userData;   // Error occur
+    res.user = userData.data;
+    // Get Favorite Data
+    let result = await getFavoriteDatas(token, userData.data.name);
+    if(result.err !== 200) return result;   // Error occur
+    res.storages = result.data;
     return res;
 }
 

@@ -3,7 +3,6 @@ import { useSelector } from "react-redux"
 
 import { SubTitle } from "../../../components/common/Titles";
 import { CloudModularColor } from "../../../variables/color";
-import ButtonListComponent from "./ButtonListComponent";
 import StorageListItem from "./StorageListItem";
 
 
@@ -16,7 +15,6 @@ const StorageListComponent = () => {
     return (
         <div style={{ marginTop: "40px"}}>
             <SubTitle>리스트</SubTitle>
-            <ButtonListComponent />
             <Table style={{
                 "color": CloudModularColor.GRAY_BOLD,
             }}>
