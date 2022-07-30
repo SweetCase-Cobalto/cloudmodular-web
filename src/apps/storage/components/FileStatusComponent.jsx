@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux/es/exports";
+import { Form } from 'react-bootstrap';
 import styled from "styled-components";
 import fileDownload from "js-file-download";
 
@@ -7,11 +8,11 @@ import DirectoryOnlyImage from "../../../asset/directory.svg";
 import FilesImage from "../../../asset/selectedFilesImg.svg";
 import DirectoriesImage from "../../../asset/selectedDirectoriesImg.svg";
 import FilesAndDirectoriesImage from "../../../asset/selectedFilesAndDirectoriesImg.svg";
-import { AccessedButton, AccessedOutlinedButton, DangerOutlinedButton } from "../../../components/common/Buttons";
+import { AccessedButton, AccessedOutlinedButton, CanceledOutlinedButton, DangerOutlinedButton } from "../../../components/common/Buttons";
 import ChangeDataNameModal from "./ChangeDataNameModal";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-import { downloadData, setSharingToData } from "../../../util/apis";
+import { downloadData, setSharingToData, unsetSharingToData, getInfoSharedDataBySharedId } from "../../../util/apis";
 import { Modal } from "react-bootstrap";
 
 const downloadEvent = (token, userId, fileData) => {
@@ -52,6 +53,27 @@ const FileStatusOneSelected = () => {
     const [changeDataNameModalShow, setChangeDataNameModalShow] = useState(false);
 
     const CheckSharedModal = (props) => {
+        // 공유가 되어있을 경우에 대한 모달
+        // 공유 링크를 확인하거나 해제할 수 있다.
+        const splited = document.location.href.split('/');
+        const urlHead = `${splited[0]}://`;
+        const hostUrl = document.location.href.split('/')[2];
+        const sharedUrl = `${urlHead}${hostUrl}/storage/share/${sharedId}`;
+
+        const unsetSharedEvent = () => {
+            unsetSharingToData(cookie.token, cookie.user_id, targetFile.id)
+            .then((res) => {
+                if(res.err === 204) alert('공유 해제 되었습니다.');
+                else alert(res.data);
+                window.location.reload();
+            });
+        }
+
+        const copySharedUrlEvent = () => {
+            // Url 복사 이벤트
+            navigator.clipboard.writeText(sharedUrl);
+
+        }
 
         return (
             <Modal
@@ -62,60 +84,61 @@ const FileStatusOneSelected = () => {
                     파일 공유 링크
                 </Modal.Header>
                 <Modal.Body>
-
+                    <Form.Control
+                        type="text"
+                        id="url"
+                        defaultValue={sharedUrl}
+                        disabled
+                    />
                 </Modal.Body>
+                <Modal.Footer>
+                    <CanceledOutlinedButton onClick={copySharedUrlEvent}>URL 복사</CanceledOutlinedButton>
+                    <AccessedOutlinedButton onClick={props.onHide}>확인</AccessedOutlinedButton>
+                    <DangerOutlinedButton onClick={unsetSharedEvent}>공유 해제</DangerOutlinedButton>
+                </Modal.Footer>
             </Modal>
         );
     }
 
     // 공유 관련 컴포넌트
     const SharedComponent = () => {
+
         const [checkSharedModalShow, setCheckSharedModalShow] = useState(false);
-        if(sharedId === -1) {
-            // 공유 필요
-            const shareEvent = () => {
-                setSharingToData(cookie.token, cookie.user_id, targetFile.id)
-                .then((res) => {
-                    if(res.err === 201) {
-                        alert("공유가 설정되었습니다.");
+
+        const accessSharedEvent = () => {
+            // Shared Button Event
+            getInfoSharedDataBySharedId(sharedId)
+            .then((res) => {
+                if(res.err === 200) {
+                    // 이미 공유되어 있음
+                    // 공유 창 열기
+                    setCheckSharedModalShow(true);
+                } else {
+                    // 공유 시도
+                    setSharingToData(cookie.token, cookie.user_id, targetFile.id)
+                    .then((res) => {
+                        if(res.err === 201)
+                            alert('공유가 완료되었습니다.');
+                        else
+                            alert(res.data);
                         window.location.reload();
-                    } else {
-                        alert(res.data);
-                    }
-                });
-            }
-            return (
-                <AccessedButton
-                    style={{ width: "100%", "marginTop": "10px" }}
-                    onClick={shareEvent}
-                >
-                    공유하기
-                </AccessedButton>
-            );
-        } else {
-            return (
-            <div
-                style={{ width: "100%", "marginTop": "10px", display: "flex" }}
-            >
-                <AccessedOutlinedButton
-                    style={{ width: "50%", marginRight: "10px" }}
-                    onClick={() => setCheckSharedModalShow(true)}
-                >
-                    공유 URL 확인하기
+                    })
+                }
+            });
+        }
+
+        return (
+            <div style={{ width: "100%", "marginTop": "10px" }}>
+                <AccessedOutlinedButton style={{ width: "100%" }} onClick={accessSharedEvent}>
+                    공유
                 </AccessedOutlinedButton>
-                <DangerOutlinedButton
-                    style={{ width: "50%" }}
-                >
-                    공유 해제하기
-                </DangerOutlinedButton>
 
                 <CheckSharedModal
                     show={checkSharedModalShow}
                     onHide={() => setCheckSharedModalShow(false)}
                 />
             </div>
-            );
-        }
+        );
     }
 
     return (

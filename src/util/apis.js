@@ -168,3 +168,16 @@ export const setSharingToData = async (token, userId, dataId) => {
     });
     return data;
 }
+
+export const unsetSharingToData = async (token, userId, dataId) => {
+    let data = await axios({
+        method: "delete",
+        url: `${serverUrl}/api/users/${userId}/datas/${dataId}/shares`,
+        headers: {token: token}
+    }).then(() => {
+        return {err: 204}
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
