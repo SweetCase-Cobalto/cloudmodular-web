@@ -1,7 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
-import axios from "axios";
 import { useCookies } from "react-cookie";
 
 import Form from "react-bootstrap/Form";
@@ -10,6 +9,7 @@ import { Desktop, Mobile } from "../../../components/common/ScreenResponsive";
 import { CloudModularColor } from "../../../variables/color";
 import { AccessedButton } from "../../../components/common/Buttons";
 import LogoImg from "../../../asset/logo-colored.png";
+import { login } from "../../../util/apis";
 
 const LoginPage = () => {
 
@@ -18,36 +18,28 @@ const LoginPage = () => {
     const loginHandler = (e) => {
         e.preventDefault();
         // 이메일/비밀번호 매칭 후 토큰 발급 받기
-        const server_url = process.env.REACT_APP_SERVER_URL;
-        let data = {
-            issue: 'login',
-            email: inputed_email,
-            passwd: inputed_passwd,
-        }
-        axios({
-            method: "post",
-            url: `${server_url}/api/auth/token`,
-            data: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        })
+        login(inputed_email, inputed_passwd)
         .then((res) => {
-            let token = res.data.token;
-            let user_id = res.data.user_id;
-            // 만료시각 설정
-            let expired_len = Number(process.env.REACT_APP_TOKEN_EXPIRED);
-            let expired = new Date();
-            expired.setDate(expired.getDate() + expired_len);
-            // 쿠키 저장
-            setCookie('token', token, { path: '/', expires: expired});
-            setCookie('user_id', user_id, {path: '/', expires: expired});
-            // Storage Page로 이동
-            window.location.replace('/storage?id=0');
-            // Cookie로 저장
-        }).catch((e) => {
-            // 에러 발생
-            if(e.code === 400) alert('입력한 정보가 맞지 않습니다.');
-            else alert('Server Error');
-        })
+            if(res.err === 200) {
+                // 성공
+                const data = res.data;
+                let token = data.token;
+                let userId = data.user_id;
+                // 만료시각 설정
+                let expired_len = Number(process.env.REACT_APP_TOKEN_EXPIRED);
+                let expired = new Date();
+                expired.setDate(expired.getDate() + expired_len);
+                // 쿠키 저장
+                setCookie('token', token, { path: '/', expires: expired});
+                setCookie('user_id', userId, {path: '/', expires: expired});
+                // Storage Page 이동
+                window.location.replace('/storage?id=0');
+            } else if(res.err === 400) {
+                alert('입력한 정보가 맞지 않습니다.');
+            } else {
+                alert('server error');
+            }
+        });
     }
 
     return (
