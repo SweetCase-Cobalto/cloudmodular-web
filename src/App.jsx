@@ -4,6 +4,7 @@ import ErrorApp from "./apps/error/Error";
 import StorageApp from "./apps/storage/Storage";
 import AppPage from "./apps/AppPage";
 import Error404Page from "./apps/error/pages/Error404Page";
+import SettingApp from "./apps/setting/Setting";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Route path='/login/*' element={<LoginApp />} />
       <Route path='/storage/*' element={<StorageApp />} />
       <Route path='/error/*' element={<ErrorApp />} />
+      <Route path='/setting/*' element={<SettingApp />} />
       <Route path='*' element={<Error404Page />} />
     </Routes>
   );

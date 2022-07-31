@@ -61,8 +61,8 @@ const Header = () => {
                         <Nav className="me-auto">
                             <Nav.Link href="/storage?id=0">Storage</Nav.Link>
                             <Nav.Link href="/storage/favorite">Favorites</Nav.Link>
-                            <Nav.Link href="/storage?id=0">Settings</Nav.Link>
                             <Nav.Link href="/storage/search">Search</Nav.Link>
+                            <Nav.Link href="/setting">Setting</Nav.Link>
                         </Nav>
                         <Form className='d-flex' onSubmit={searchBarEvent}>
                             <Form.Control

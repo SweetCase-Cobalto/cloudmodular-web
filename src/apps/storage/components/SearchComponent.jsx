@@ -67,7 +67,7 @@ const SearchComponent = () => {
                 </CheckboxLayer>
                 <CheckboxLayer>
                     <Form.Check type="switch" onChange={(e) => {sortByCreate = switchCoverter(e);}} />
-                    <p>생성된 데이터 순으로 정렬</p>
+                    <p>최근 생성된 순으로 정렬</p>
                 </CheckboxLayer>
                 <CheckboxLayer>
                     <Form.Check type="switch" onChange={(e) => {sortByName = switchCoverter(e);}}/>

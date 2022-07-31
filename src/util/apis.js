@@ -23,6 +23,7 @@ export const login = async (email, passwd) => {
 }
 
 export const updateUser = async (token, userId, name, passwd) => {
+    // 사용자 정보 업데이트
     let param = {
         name: name,
         passwd: passwd,
