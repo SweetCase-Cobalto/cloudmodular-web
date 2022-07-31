@@ -1,6 +1,45 @@
 import axios from "axios";
 
 let serverUrl = process.env.REACT_APP_SERVER_URL;
+
+export const login = async (email, passwd) => {
+    // 로그인
+    let param = {
+        issue: 'login',
+        email: email,
+        passwd: passwd,
+    }
+    let data = await axios({
+        method: "post",
+        url: `${serverUrl}/api/auth/token`,
+        data: JSON.stringify(param),
+        headers: {'Content-Type': 'Application/json'}
+    }).then((res) => {
+        return {err: 200, data: res.data};
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
+
+export const updateUser = async (token, userId, name, passwd) => {
+    let param = {
+        name: name,
+        passwd: passwd,
+    }
+    let data = await axios({
+        method: "patch",
+        url: `${serverUrl}/api/users/${userId}`,
+        data: JSON.stringify(param),
+        headers: {'Content-Type': 'Application/json', token: token}
+    }).then((res) => {
+        return {err: 200, data: res.data};
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
+
 export const getUserInfoByID = async (token, userId) => {
     // UserID를 이용한 데이터 가져오기
     let data = await axios({
