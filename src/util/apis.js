@@ -41,6 +41,34 @@ export const updateUser = async (token, userId, name, passwd) => {
     return data;
 }
 
+export const removeUser = async (token, userId) => {
+    
+    let data = await axios({
+        method: "delete",
+        url: `${serverUrl}/api/users/${userId}`,
+        headers: {token: token},
+    }).then(() => {
+        return {err: 204}
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
+
+export const getUserList = async (token, page) => {
+    // 유저 리스트 가져오기
+    let data = await axios({
+        method: "get",
+        url: `${serverUrl}/api/users/search?page_size=20&page=${page}`,
+        headers: {token: token}
+    }).then((res) => {
+        return {err: 200, data: res.data};
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.statusText};
+    });
+    return data;
+}
+
 export const getUserInfoByID = async (token, userId) => {
     // UserID를 이용한 데이터 가져오기
     let data = await axios({
@@ -269,7 +297,6 @@ export const getFavoriteDatas = async (token, userName) => {
 }
 
 export const searchData = async (token, params) => {
-    console.log(params);
     let data = await axios({
         method: "get",
         url: `${serverUrl}/api/search/datas`,

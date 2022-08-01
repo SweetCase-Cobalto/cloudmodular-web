@@ -36,7 +36,7 @@ const SettingPage = () => {
             if(res.err === 200)
                 dispatch(updateMyAccount(res.data));
             else {
-                alert('Error');
+                alert('유효하지 않는 접근 입니다.');
                 removeCookie("token");
                 removeCookie("user_id");
                 window.location.replace("/login");
@@ -44,7 +44,7 @@ const SettingPage = () => {
         }).catch(() => {
             // Account 자체를 받지 못하므로 Cookie를 전부 지우고
             // Login창으로 이동한다.
-            alert('해당 계정의 정보가 정확하지 않습니다.');
+            alert('유효하지 않는 접근 입니다.');
             removeCookie("token");
             removeCookie("user_id");
             window.location.replace("/login");

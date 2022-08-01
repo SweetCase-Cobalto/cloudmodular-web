@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 import { Nav, Navbar, Container, Form } from "react-bootstrap";
 import { Desktop, Mobile} from './ScreenResponsive';
@@ -10,6 +11,7 @@ import "../fonts.css";
 const Header = () => {
 
     const [, , removeCookie] = useCookies(['token', 'user_id']);
+    const user = useSelector(state => state.myAccount);
 
     const logoutEvent = () => {
         removeCookie("token");
@@ -63,6 +65,7 @@ const Header = () => {
                             <Nav.Link href="/storage/favorite">Favorites</Nav.Link>
                             <Nav.Link href="/storage/search">Search</Nav.Link>
                             <Nav.Link href="/setting">Setting</Nav.Link>
+                            { user.isAdmin && <Nav.Link href="/accounts#1">Accounts</Nav.Link> }
                         </Nav>
                         <Form className='d-flex' onSubmit={searchBarEvent}>
                             <Form.Control

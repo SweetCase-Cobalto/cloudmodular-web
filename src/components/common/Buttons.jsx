@@ -18,6 +18,10 @@ export const AccessedButton = styled.button`
     &:hover {
         background-color: ${COLOR_ACCESS_HOVER};
     }
+    &:disabled {
+        background-color: gray;
+        color: white;
+    }
 `;
 export const AccessedOutlinedButton = styled.button`
     padding: 7px 10px 7px 10px;
@@ -29,6 +33,10 @@ export const AccessedOutlinedButton = styled.button`
     &:hover {
         background-color: ${COLOR_ACCESS_OUTLINED_HOVER};
     }
+    &:disabled {
+        background-color: gray;
+        color: white;
+    }
 `;
 export const DangerOutlinedButton = styled.button`
     padding: 7px 10px 7px 10px;
@@ -38,6 +46,10 @@ export const DangerOutlinedButton = styled.button`
     border-radius: 5px;
     &:hover {
         background-color: ${COLOR_DANGER_OUTLINED_HOVER};
+    }
+    &:disabled {
+        background-color: gray;
+        color: white;
     }
 `;
 export const CanceledButton = styled.button`
@@ -50,6 +62,11 @@ export const CanceledButton = styled.button`
     &:hover {
         background-color: ${COLOR_CANCELED_HOVER};
     }
+
+    &:disabled {
+        background-color: gray;
+        color: white;
+    }
 `;
 export const CanceledOutlinedButton = styled.button`
     padding: 7px 10px 7px 10px;
@@ -60,5 +77,9 @@ export const CanceledOutlinedButton = styled.button`
 
     &:hover {
         background-color: ${COLOR_CANCELED_OUTLINED_HOVER};
+    }
+    &:disabled {
+        background-color: gray;
+        color: white;
     }
 `;
