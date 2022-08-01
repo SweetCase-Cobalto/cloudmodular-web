@@ -53,11 +53,9 @@ const LoginPage = () => {
                         <DesktopForm>
                             <img alt="logo" src={LogoImg} width="200px" style={{"marginBottom": "50px"}}/>
                             <Form.Control type="email" placeholder="Email" style={{ "marginBottom": "20px" }}
-                                onChange={e => { inputed_email = e.target.value; }}
-                            />
+                                onChange={e => { inputed_email = e.target.value; }} />
                             <Form.Control type="password" placeholder="Password" style={{ "marginBottom": "40px" }}
-                                onChange={e => { inputed_passwd = e.target.value; }}
-                            />
+                                onChange={e => { inputed_passwd = e.target.value; }} />
                             <AccessedButton style={{ "width": "100%" }} onClick={loginHandler}>Login</AccessedButton>
                         </DesktopForm>
                     </DesktopLayer>
@@ -66,9 +64,11 @@ const LoginPage = () => {
                     <MobileLayer>
                         <MobileForm>
                             <img alt="logo" src={LogoImg} width="180px" style={{"marginBottom": "50px"}}/>
-                            <Form.Control type="email" placeholder="Email" style={{ "marginBottom": "20px" }} />
-                            <Form.Control type="password" placeholder="Password" style={{ "marginBottom": "40px" }} />
-                            <AccessedButton style={{ "width": "100%" }}>Login</AccessedButton>
+                            <Form.Control type="email" placeholder="Email" style={{ "marginBottom": "20px" }}
+                                onChange={e => { inputed_email = e.target.value; }} />
+                            <Form.Control type="password" placeholder="Password" style={{ "marginBottom": "40px" }} 
+                                onChange={e => { inputed_passwd = e.target.value; }} />
+                            <AccessedButton style={{ "width": "100%" }} onClick={loginHandler}>Login</AccessedButton>
                         </MobileForm>
                     </MobileLayer>
                 </Mobile>

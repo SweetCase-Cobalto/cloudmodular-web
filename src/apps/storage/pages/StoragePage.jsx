@@ -15,6 +15,7 @@ import RootTagComponent from "../components/RootTagComponent";
 import { DesktopCenterLayer, DesktopLeftLayer, DesktopRightLayer } from "../../../components/common/Layers";
 import FileStatusComponent from "../components/FileStatusComponent";
 import ButtonListComponent from "../components/ButtonListComponent";
+import MobileStorageListComponent from "../components/mobile/MobileStorageListComponent";
 
 
 const StoragePage = () => {
@@ -87,8 +88,7 @@ const StoragePage = () => {
                     <MobileLayer>
                         <Title>Storage</Title>
                         <MainFullLine />
-                        <RootTagComponent />
-                        <StorageListComponent />
+                        <MobileStorageListComponent />
                     </MobileLayer>
                 </Mobile>
             </div>

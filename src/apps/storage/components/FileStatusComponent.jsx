@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { downloadData, setSharingToData, unsetSharingToData, getInfoSharedDataBySharedId } from "../../../util/apis";
 import { Modal } from "react-bootstrap";
+import { Desktop } from "../../../components/common/ScreenResponsive";
 
 const downloadEvent = (token, userId, fileData) => {
     downloadData(token, userId, fileData.id)
@@ -223,10 +224,11 @@ const FileStatusComponent = () => {
     const currentDir = useSelector(state => state.storageResult);
     const selectedIdxs = currentDir.selectedIdxs;
 
+
     switch (selectedIdxs.size) {
-        case 0: return <FileStatusNoSelected />
-        case 1: return <FileStatusOneSelected />
-        default: return <FileStatusMultipleSelected />
+        case 0: return <Desktop><FileStatusNoSelected /></Desktop>
+        case 1: return <Desktop><FileStatusOneSelected /></Desktop>
+        default: return <Desktop><FileStatusMultipleSelected /></Desktop>
     }
 }
 export default FileStatusComponent;

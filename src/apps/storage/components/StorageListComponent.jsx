@@ -15,9 +15,13 @@ const StorageListComponent = () => {
     return (
         <div style={{ marginTop: "40px"}}>
             <SubTitle>리스트</SubTitle>
-            <Table style={{
-                "color": CloudModularColor.GRAY_BOLD,
-            }}>
+            <Table
+                striped hover
+                style={{
+                    color: CloudModularColor.GRAY_BOLD,
+                    tableLayout: "fixed",
+                }}
+            >
                 <thead>
                     <tr>
                         <th>이름</th>

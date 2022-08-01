@@ -40,7 +40,7 @@ const StorageListItem = (props) => {
         let isFavorite = props.data.isFavorite;
         const requestFunc = isFavorite ? unSetDataFavorite : setDataFavorite;
         requestFunc(cookie.token, cookie.user_id, data.id)
-        .then((res) => {
+        .then(() => {
             window.location.reload();
         });
 
@@ -48,7 +48,7 @@ const StorageListItem = (props) => {
 
     return (
         <ItemLayer>
-            <td style={{ display: "flex"}}>
+            <td style={{ display: "flex" }}>
                 {
                     selectedIdxs.has(idx)
                     &&
@@ -77,6 +77,7 @@ const StorageListItem = (props) => {
 
 const ItemLayer = styled.tr`
     background-color: white;
+    height: auto;
     
 `
 
