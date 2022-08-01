@@ -126,9 +126,6 @@ const Header = () => {
                             <MobileMenuItem href="/storage/search">Search</MobileMenuItem>
                         </MobileMenuItemWrapper>
                         <MobileMenuItemWrapper>
-                            <MobileMenuItem href="/setting">Settings</MobileMenuItem>
-                        </MobileMenuItemWrapper>
-                        <MobileMenuItemWrapper>
                             <MobileMenuItem onClick={logoutEvent}>Logout</MobileMenuItem>
                         </MobileMenuItemWrapper>
                     </Offcanvas.Body>

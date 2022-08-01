@@ -12,6 +12,10 @@ import { MainFullLine } from "../../../components/common/Lines";
 import StorageListComponent from "../components/StorageListComponent";
 import SearchComponent from "../components/SearchComponent";
 import FileStatusComponent from "../components/FileStatusComponent";
+import { Desktop, MobileLayer, Mobile } from "../../../components/common/ScreenResponsive";
+import { Form } from "react-bootstrap";
+import { AccessedButton } from "../../../components/common/Buttons";
+import MobileStorageListComponent from "../components/mobile/MobileStorageListComponent";
 
 
 const SearchPage = () => {
@@ -51,18 +55,27 @@ const SearchPage = () => {
                 <Helmet>
                     <title>Search</title>
                 </Helmet>
-                <div style={{ display: "flex" }}>
-                    <DesktopLeftLayer />
-                    <DesktopCenterLayer style={{ paddingTop: "50px" }}>
-                        <Title>Search</Title>
-                        <MainFullLine />
+                <Desktop>
+                    <div style={{ display: "flex" }}>
+                        <DesktopLeftLayer />
+                        <DesktopCenterLayer style={{ paddingTop: "50px" }}>
+                            <Title>Search</Title>
+                            <MainFullLine />
+                            <SearchComponent />
+                            <StorageListComponent />
+                        </DesktopCenterLayer>
+                        <DesktopRightLayer>
+                            <FileStatusComponent />
+                        </DesktopRightLayer>
+                    </div>
+                </Desktop>
+                <Mobile>
+                    <MobileLayer>
                         <SearchComponent />
-                        <StorageListComponent />
-                    </DesktopCenterLayer>
-                    <DesktopRightLayer>
-                        <FileStatusComponent />
-                    </DesktopRightLayer>
-                </div>
+                        <div style={{ width: "100%", height: "100px" }}></div>
+                        <MobileStorageListComponent />
+                    </MobileLayer>
+                </Mobile>
             </div>
         );
     }

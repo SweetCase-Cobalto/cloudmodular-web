@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Form } from "react-bootstrap";
 import { AccessedButton } from "../../../components/common/Buttons";
+import { Mobile, Desktop } from "../../../components/common/ScreenResponsive";
 
 const switchCoverter = (e) => {
     return e.target.checked ? 1 : 0;
@@ -32,7 +33,20 @@ const SearchComponent = () => {
             url += '&word=' + searchWord;
         window.location.replace(url);
     }
+    const searchEventInMobile = () => {
+        /*
+            자동 설정되는 필터들
+            recursive
+            날짜, 이름순
+        */
+        let url = '/storage/search?recursive=1&sort_create=1&sort_name=1';
+        if(searchWord !== '')
+            url += '&word=' + searchWord;
+        window.location.replace(url);
+    }
     return (
+        <div>
+        <Desktop>
         <Layer>
             <WordSearcherLayer>
                 <Form.Control
@@ -75,6 +89,12 @@ const SearchComponent = () => {
                 </CheckboxLayer>
             </OptionalLayer>
         </Layer>
+        </Desktop>
+        <Mobile>
+            <Form.Control type="text" placeholder="검색어를 입력하세요" onChange={(e) => {searchWord = e.target.value;}} />
+            <AccessedButton style={{ marginTop: "10px", float: "right" }} onClick={searchEventInMobile}>검색</AccessedButton>
+        </Mobile>
+        </div>
     );
 }
 export default SearchComponent;
