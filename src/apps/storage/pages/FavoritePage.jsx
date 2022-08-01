@@ -8,10 +8,11 @@ import { receiveDataForFavoritePage } from "../api";
 import Header from "../../../components/common/Header";
 import { DesktopCenterLayer, DesktopLeftLayer, DesktopRightLayer } from "../../../components/common/Layers";
 import FileStatusComponent from "../components/FileStatusComponent";
-import { DesktopLayer, Desktop } from "../../../components/common/ScreenResponsive";
+import { DesktopLayer, Desktop, Mobile, MobileLayer } from "../../../components/common/ScreenResponsive";
 import { Title } from "../../../components/common/Titles";
 import { MainFullLine } from "../../../components/common/Lines";
 import StorageListComponent from "../components/StorageListComponent";
+import MobileStorageListComponent from "../components/mobile/MobileStorageListComponent";
 
 const FavoritePage = () => {
     const [cookie, ,] = useCookies(['token', 'user_id']);
@@ -64,6 +65,13 @@ const FavoritePage = () => {
                         </DesktopRightLayer>
                     </div>
                 </Desktop>
+                <Mobile>
+                    <MobileLayer>
+                        <Title>Favorites</Title>
+                        <MainFullLine />
+                        <MobileStorageListComponent />
+                    </MobileLayer>
+                </Mobile>
             </div>
         );
     }
