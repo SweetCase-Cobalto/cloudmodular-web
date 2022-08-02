@@ -37,8 +37,8 @@ const CreateUserModal = (props) => {
         })
         .then(() => {
             alert('사용자를 생성했습니다.')
-        }).catch(() => {
-            alert('사용자 생성 실패');
+        }).catch((err) => {
+            alert(err.response.data.detail);
         }).finally(() => {
             window.location.reload();
         });

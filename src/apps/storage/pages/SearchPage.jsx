@@ -13,8 +13,6 @@ import StorageListComponent from "../components/StorageListComponent";
 import SearchComponent from "../components/SearchComponent";
 import FileStatusComponent from "../components/FileStatusComponent";
 import { Desktop, MobileLayer, Mobile } from "../../../components/common/ScreenResponsive";
-import { Form } from "react-bootstrap";
-import { AccessedButton } from "../../../components/common/Buttons";
 import MobileStorageListComponent from "../components/mobile/MobileStorageListComponent";
 
 
