@@ -34,10 +34,8 @@ const LoginPage = () => {
                 setCookie('user_id', userId, {path: '/', expires: expired});
                 // Storage Page 이동
                 window.location.replace('/storage?id=0');
-            } else if(res.err === 400) {
-                alert('입력한 정보가 맞지 않습니다.');
             } else {
-                alert('server error');
+                alert(res.data);
             }
         });
     }

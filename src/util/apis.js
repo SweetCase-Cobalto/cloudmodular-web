@@ -17,7 +17,7 @@ export const login = async (email, passwd) => {
     }).then((res) => {
         return {err: 200, data: res.data};
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -36,7 +36,7 @@ export const updateUser = async (token, userId, name, passwd) => {
     }).then((res) => {
         return {err: 200, data: res.data};
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -50,7 +50,7 @@ export const removeUser = async (token, userId) => {
     }).then(() => {
         return {err: 204}
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -64,7 +64,7 @@ export const getUserList = async (token, page) => {
     }).then((res) => {
         return {err: 200, data: res.data};
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -78,7 +78,7 @@ export const getUserInfoByID = async (token, userId) => {
     }).then((res) => {
         return {err: 200, data: res.data}
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -95,7 +95,7 @@ export const getDataInfoByID = async(token, userId, dataId) => {
         return {err: 200, data: res.data};
     })
     .catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -115,7 +115,7 @@ export const getDataListByRoot = async (token, userName, rootId) => {
     }).then((res) => {
         return {err: 200, data: res.data};
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -130,7 +130,7 @@ export const createDirectory = async (token, userId, directoryId, directoryName)
     }).then((res) => {
         return {err: 201, data: res.data};
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -147,7 +147,7 @@ export const uploadFile = async (token, userId, directoryId, file) => {
     }).then((res) => {
         return {err: 201, data: res.data};
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -162,7 +162,7 @@ export const downloadData = async (token, userId, dataId) => {
     }).then((res) => {
         return {err: 200, data: res};
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -175,7 +175,7 @@ export const getInfoSharedDataBySharedId = async (sharedId) => {
     }).then((res) => {
         return {err: 200, data: res.data};
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -189,7 +189,7 @@ export const downloadShared = async (sharedId) => {
     }).then((res) => {
         return {err: 200, data: res}
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -203,7 +203,7 @@ export const removeData = async (token, userId, dataId) => {
     }).then(() => {
         return {err: 204}
     }).catch((err) => {
-        return {err: err.response.status, message: err.response.statusText};
+        return {err: err.response.status, message: err.response.data.detail};
     });
     return data;
 }
@@ -218,7 +218,7 @@ export const changeDataName = async (token, userId, dataId, newName) => {
     }).then((res) => {
         return {err: 200, data: res.data};
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -232,7 +232,7 @@ export const setSharingToData = async (token, userId, dataId) => {
     }).then((res) => {
         return {err: 201, data: {sharedId: res.data.shared_id}}
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -245,7 +245,7 @@ export const unsetSharingToData = async (token, userId, dataId) => {
     }).then(() => {
         return {err: 204}
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -258,7 +258,7 @@ export const setDataFavorite = async (token, userId, dataId) => {
     }).then(() => {
         return {err: 201}
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -271,7 +271,7 @@ export const unSetDataFavorite = async (token, userId, dataId) => {
     }).then(() => {
         return {err: 201}
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -291,7 +291,7 @@ export const getFavoriteDatas = async (token, userName) => {
     }).then((res) => {
         return {err: 200, data: res.data};
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
@@ -305,7 +305,7 @@ export const searchData = async (token, params) => {
     }).then((res) => {
         return {err: 200, data: res.data};
     }).catch((err) => {
-        return {err: err.response.status, data: err.response.statusText};
+        return {err: err.response.status, data: err.response.data.detail};
     });
     return data;
 }
