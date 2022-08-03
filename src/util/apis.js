@@ -1,6 +1,5 @@
 import axios from "axios";
-
-let serverUrl = process.env.REACT_APP_SERVER_URL;
+import { serverUrl } from "../variables/urls";
 
 export const login = async (email, passwd) => {
     // 로그인

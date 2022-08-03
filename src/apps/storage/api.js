@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getUserInfoByID, getDataListByRoot, getDataInfoByID, getFavoriteDatas, searchData } from "../../util/apis"
+import { serverUrl } from "../../variables/urls";
 
 export const receiveDataForStoragePage = async (token, userId, rootId) => {
     // root_id를 0에서 시작
@@ -68,7 +69,6 @@ export const receiveDataForSearchPage = async (token, userId, params) => {
 export const getDirectoryIDForMoveByTag = async (token, user, root, name) => {
     // 태그 클릭시 해당 태그에 대한 위치로 이동
     // 이때 name, root를 이용해서 먼저 데이터의 ID부터 검색한다.
-    let serverUrl = process.env.REACT_APP_SERVER_URL;
     let data = await axios({
         method: "get",
         url: `${serverUrl}/api/search/datas`,

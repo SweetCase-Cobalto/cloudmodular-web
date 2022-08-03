@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { AccessedButton } from "../../../components/common/Buttons";
 import { useCookies } from "react-cookie";
+import { serverUrl } from "../../../variables/urls";
 
 const CreateUserModal = (props) => {
     // cookie data
@@ -23,7 +24,6 @@ const CreateUserModal = (props) => {
             return;
         }
         // 서버에 유저 생성 요청
-        const serverUrl = process.env.REACT_APP_SERVER_URL;
         axios({
             method: "post",
             url: `${serverUrl}/api/users`,
