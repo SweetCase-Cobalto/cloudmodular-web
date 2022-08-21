@@ -79,6 +79,18 @@ export const getUserInfoByID = async (token, userId) => {
     }).catch((err) => {
         return {err: err.response.status, data: err.response.data.detail};
     });
+    // 에러 발생 시 그대로 출력
+    if(data.err !== 200) return data;
+    // 사용자가 현재 사용한 용량 구하기
+    await axios({
+        method: 'get',
+        url: `${serverUrl}/api/users/${userId}/usage`,
+        headers: {'token': token},
+    }).then((res) => {
+        data.data.usage = res.data.used;
+    }).catch((err) => {
+        return {err: err.response.status, data: err.response.data.detail};
+    });
     return data;
 }
 

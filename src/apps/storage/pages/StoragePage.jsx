@@ -16,6 +16,7 @@ import { DesktopCenterLayer, DesktopLeftLayer, DesktopRightLayer } from "../../.
 import FileStatusComponent from "../components/FileStatusComponent";
 import ButtonListComponent from "../components/ButtonListComponent";
 import MobileStorageListComponent from "../components/mobile/MobileStorageListComponent";
+import { StorageUsageOnPage } from "../../../components/common/StorageUsages";
 
 
 const StoragePage = () => {
@@ -72,6 +73,7 @@ const StoragePage = () => {
                         <DesktopLeftLayer />
                         <DesktopCenterLayer>
                             <DesktopLayer style={{paddingTop: "50px"}}>
+                                <StorageUsageOnPage />
                                 <Title>Storage</Title>
                                 <MainFullLine />
                                 <RootTagComponent />
