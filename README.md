@@ -13,7 +13,7 @@ CloudModular 웹버전
 </div>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/app--version-0.1.0--alpha1-blue?style=for-the-badge">
+    <img src="https://img.shields.io/badge/app--version-0.1.0--beta1-blue?style=for-the-badge">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Sweetcase-Cobalto/cloudmodular-web?color=green&label=web-version&style=for-the-badge">
 </div>
 
