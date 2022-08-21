@@ -9,6 +9,7 @@ import { useCookies } from "react-cookie";
 import WhiteLogoImg from "../../asset/logo-white.png";
 import "../fonts.css";
 import { useState } from "react";
+import { StorageUsageOnPage } from "./StorageUsages";
 
 const Header = () => {
 
@@ -128,6 +129,7 @@ const Header = () => {
                         <MobileMenuItemWrapper>
                             <MobileMenuItem onClick={logoutEvent}>Logout</MobileMenuItem>
                         </MobileMenuItemWrapper>
+                        <StorageUsageOnPage />
                     </Offcanvas.Body>
                 </Offcanvas>
 

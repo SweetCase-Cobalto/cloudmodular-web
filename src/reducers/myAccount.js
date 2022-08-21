@@ -7,6 +7,7 @@ const initialState = {
     storageSize: -1,
     id: -1,
     email: null,
+    usage: -1,
 };
 
 export const updateMyAccount = (userData) => {
@@ -17,6 +18,7 @@ export const updateMyAccount = (userData) => {
         storageSize: userData.storage_size,
         id: userData.id,
         email: userData.email,
+        usage: userData.usage,
     }
 };
 
@@ -30,6 +32,7 @@ export const myAccount = (state = initialState, action) => {
                 storageSize: action.storageSize,
                 id: action.id,
                 email: action.email,
+                usage: action.usage,
             }
         default:
             return state;

@@ -27,13 +27,16 @@ export const RootTag = (props) => {
                 } else {
                     alert(res.data);
                 }
-            })
-            
+            });
         }
     }
-
-
-    return (<RootTagLayer onClick={moveTargetDirectoryEvent}>{name}</RootTagLayer>);
+    return (
+        <RootTagLayer
+            onClick={moveTargetDirectoryEvent}
+        >
+            {name}
+        </RootTagLayer>
+    );
 };
 const RootTagLayer = styled.div`
     padding: 4px 7px 4px 7px;
