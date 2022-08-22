@@ -58,7 +58,7 @@ export const getUserList = async (token, page) => {
     // 유저 리스트 가져오기
     let data = await axios({
         method: "get",
-        url: `${serverUrl}/api/users/search?page_size=20&page=${page}`,
+        url: `${serverUrl}/api/users/search`,
         headers: {token: token}
     }).then((res) => {
         return {err: 200, data: res.data};
