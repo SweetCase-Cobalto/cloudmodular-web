@@ -12,9 +12,7 @@ CloudModular 웹버전
     <img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white">
 </div>
 
-<div align="center">
-    <img src="https://img.shields.io/badge/app--version-0.1.0--beta1-blue?style=for-the-badge">
-    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Sweetcase-Cobalto/cloudmodular-web?color=green&label=web-version&style=for-the-badge">
+<div align="center"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Sweetcase-Cobalto/cloudmodular-web?style=for-the-badge">
 </div>
 
 The Constructive Cloud Service for your NAS Server
