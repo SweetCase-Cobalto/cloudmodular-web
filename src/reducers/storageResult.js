@@ -24,6 +24,7 @@ export const updateCurrentStorageList = (newList, rootName) => {
             sharedId: e["shared_id"],
             created: created,
             name: e["name"],
+            size: e['size'],
         }
     })
     return {

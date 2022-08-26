@@ -149,7 +149,7 @@ export const createDirectory = async (token, userId, directoryId, directoryName)
 export const uploadFile = async (token, userId, directoryId, file) => {
     // 파일 업로드
     const formData = new FormData();
-    formData.append("files", file);
+    formData.append("file", file);
     let data = await axios({
         method: "post",
         url: `${serverUrl}/api/users/${userId}/datas/${directoryId}`,
