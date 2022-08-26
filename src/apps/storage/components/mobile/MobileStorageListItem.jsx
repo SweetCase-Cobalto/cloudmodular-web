@@ -8,6 +8,7 @@ import { AccessedButton } from "../../../../components/common/Buttons";
 import { useCookies } from "react-cookie";
 import { downloadData } from "../../../../util/apis";
 import fileDownload from "js-file-download";
+import { sizeToStr } from "../../../../util/tools";
 
 const MobileStorageListItem = (props) => {
 
@@ -34,6 +35,8 @@ const MobileStorageListItem = (props) => {
             }
         });
     }
+
+    const sizeStr = sizeToStr(data.size, data.isDir);
 
     return (
         <Card>
@@ -71,6 +74,7 @@ const MobileStorageListItem = (props) => {
                         <p style={{ marginBottom: "20px" }}>{data.name}</p>
                         <img style={{ marginBottom: "20px" }} alt="data logo" src={dataIcon}/>
                         <p style={{ marginBottom: "20px" }}>{data.created}</p>
+                        <p style={{ marginBottom: "20px" }}>{sizeStr}</p>
                         <AccessedButton onClick={downloadEvent}>다운로드</AccessedButton>
                     </center>
                 </Offcanvas.Body>

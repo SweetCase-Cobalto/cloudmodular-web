@@ -11,7 +11,9 @@ const StorageListComponent = () => {
     const currentDir = useSelector(state => state.storageResult);
 
     // 컴포넌트 생성
-    const TableChilds = currentDir.dataList.map((data, index) => <StorageListItem key={index} idx={index} data={data} />);
+    const TableChilds = 
+        currentDir.dataList
+            .map((data, index) => <StorageListItem key={index} idx={index} data={data} />);
     return (
         <div style={{ marginTop: "40px"}}>
             <SubTitle>리스트</SubTitle>
@@ -26,6 +28,7 @@ const StorageListComponent = () => {
                     <tr>
                         <th>이름</th>
                         <th>생성날짜</th>
+                        <th>크기</th>
                         <th>북마크</th>
                     </tr>
                 </thead>

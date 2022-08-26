@@ -15,6 +15,7 @@ import { useCookies } from "react-cookie";
 import { downloadData, setSharingToData, unsetSharingToData, getInfoSharedDataBySharedId } from "../../../util/apis";
 import { Modal } from "react-bootstrap";
 import { Desktop } from "../../../components/common/ScreenResponsive";
+import { unsecuredCopyToClipboard } from "../../../util/tools";
 
 const downloadEvent = (token, userId, fileData) => {
     downloadData(token, userId, fileData.id)
@@ -61,6 +62,7 @@ const FileStatusOneSelected = () => {
         const hostUrl = document.location.href.split('/')[2];
         const sharedUrl = `${urlHead}${hostUrl}/storage/share/${sharedId}`;
 
+
         const unsetSharedEvent = () => {
             unsetSharingToData(cookie.token, cookie.user_id, targetFile.id)
             .then((res) => {
@@ -72,8 +74,16 @@ const FileStatusOneSelected = () => {
 
         const copySharedUrlEvent = () => {
             // Url 복사 이벤트
-            navigator.clipboard.writeText(sharedUrl);
-
+            if (window.isSecureContext) {
+                navigator.clipboard.writeText(sharedUrl)
+                .then(() => {
+                    // TODO 추가 기능 구현 예정
+                })
+            } else {
+                if (unsecuredCopyToClipboard(sharedUrl)) {
+                    // 추가 기능 구현 예정
+                }
+            }
         }
 
         return (

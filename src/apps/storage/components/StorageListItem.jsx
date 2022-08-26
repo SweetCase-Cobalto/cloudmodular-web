@@ -2,12 +2,14 @@ import { Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux"
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import styled from "styled-components";
+import { useCookies } from "react-cookie";
+
 
 import { selectData, unselectData } from "../../../reducers/storageResult";
 import DirectoryIcon from "../../../asset/directory.svg";
 import FileIcon from "../../../asset/file.svg";
 import { setDataFavorite, unSetDataFavorite } from "../../../util/apis";
-import { useCookies } from "react-cookie";
+import { sizeToStr } from "../../../util/tools";
 
 const StorageListItem = (props) => {
     /*
@@ -45,7 +47,7 @@ const StorageListItem = (props) => {
         });
 
     }
-
+    const strSize = sizeToStr(data.size, data.isDir);
     return (
         <ItemLayer>
             <td style={{ display: "flex" }}>
@@ -70,6 +72,7 @@ const StorageListItem = (props) => {
                 <span style={{cursor: "pointer"}} onClick={moveEvent}>{data.name}</span>
             </td>
             <td style={{ fontSize: "0.8em" }}>{data.created}</td>
+            <td>{strSize}</td>
             <td><FavoriteIcon style={{ cursor: "pointer" }} onClick={favoriteEvent} /></td>
         </ItemLayer>
     );
