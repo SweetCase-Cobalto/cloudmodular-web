@@ -72,7 +72,10 @@ const FileStatusOneSelected = () => {
 
         const copySharedUrlEvent = () => {
             // Url 복사 이벤트
-            navigator.clipboard.writeText(sharedUrl);
+            navigator.clipboard.writeText(sharedUrl)
+            .then(() => {
+                alert('URL이 복사되었습니다.');
+            })
 
         }
 

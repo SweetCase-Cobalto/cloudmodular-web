@@ -90,6 +90,8 @@ const StoragePage = () => {
                     <MobileLayer>
                         <Title>Storage</Title>
                         <MainFullLine />
+                        <RootTagComponent />
+                        <div style={{ marginTop: "30px" }}/>
                         <MobileStorageListComponent />
                     </MobileLayer>
                 </Mobile>
