@@ -8,3 +8,20 @@ export const sizeToStr = (size, isDir) => {
         else return `${(size/(10**9)).toFixed(3)} GB`;
     }
 }
+
+export const unsecuredCopyToClipboard = (text) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        // will be deprecated
+        document.execCommand('copy');
+    } catch (err) {
+        alert('복붙에 실패했습니다.');
+        return false;
+    }
+    document.body.removeChild(textArea);
+    return true;
+}
