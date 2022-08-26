@@ -21,7 +21,8 @@ const FileUploadModal = (props) => {
     const startUploadEvent = () => {
         // 업로드 시작 이벤트
         // 한개 이상의 파일이 로드되어야 한다.
-        if(filesForUpload.length === 0) alert("업로드할 파일을 선택해 주세요");
+        if(filesForUpload.ready.length === 0)
+            alert("업로드할 파일을 선택해 주세요");
         else setFilesForUpload({
             ...filesForUpload,
             start: true,
