@@ -5,6 +5,9 @@ import { useSearchParams } from "react-router-dom";
 import { AccessedButton, AccessedOutlinedButton, CanceledButton } from "../../../components/common/Buttons";
 import { uploadFile } from "../../../util/apis";
 
+
+
+
 const FileUploadModal = (props) => {
 
     const [cookie, ,] = useCookies(['token', 'user_id']);
@@ -12,11 +15,30 @@ const FileUploadModal = (props) => {
     const [filesForUpload, setFilesForUpload] = useState({
         ready: [],
         end: [],
+        endMsg: [], // 완료시 에러코드 및 메세지 저장
         start: false,
     });    
     const token = cookie.token;
     const userId = cookie.user_id;
     const directoryId = searchParams.get("id");
+
+    const getUploadStatusItem = (res, i) => {
+        /*
+            업로드 또는 업로드가 완료된 상태일 때
+            파일의 업로드 여부를 출력하기 위한 파일 업로드 상태 리스트
+        */
+        const filename = filesForUpload.end[i].name;
+        let msg = res.err === 201 ? "OK" : res.data;
+        let msgStyleConfig = res.err === 201 ? { color: "green" } : { color: "red" }
+
+        return (
+            <div style={{ display: "flex" }} key={i}>
+                <p style={{ marginRight: "5px" }}>{filename}</p>
+                <p style={msgStyleConfig}>{msg}</p>
+            </div>
+        );
+        //return <p key={i}>{msg}</p>
+    }
 
     const startUploadEvent = () => {
         // 업로드 시작 이벤트
@@ -85,15 +107,24 @@ const FileUploadModal = (props) => {
         const percentage = (filesForUpload.end.length / requestSize) * 100;
         const targetFile = filesForUpload.ready.shift();
 
-        uploadFile(token, userId, directoryId, targetFile).finally(() => {
+        uploadFile(token, userId, directoryId, targetFile)
+        .then((res) => {
+            filesForUpload.endMsg.unshift(res);
+        }).catch(() => {
+            filesForUpload.endMsg.unshift({err: 500, data: "server error"});
+        }).finally(() => {
             // 갯수 갱신
             filesForUpload.end.unshift(targetFile);
             setFilesForUpload({
                 ...filesForUpload,
                 ready: filesForUpload.ready,
                 end: filesForUpload.end,
+                endMsg: filesForUpload.endMsg,
             });
         });
+
+        // 현재 상태 리스트 컴포넌트로 생성
+        const StatusListComponent = filesForUpload.endMsg.map(getUploadStatusItem);
 
         return (
             <Modal
@@ -105,12 +136,17 @@ const FileUploadModal = (props) => {
                     <Modal.Title>파일 업로드</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <div>
+                        {StatusListComponent}
+                    </div>
                     <p>업로드 중</p>
                     <ProgressBar variant="success" now={percentage} />
                 </Modal.Body>
             </Modal>
         );
     } else {
+        // 현재 상태 리스트 컴포넌트로 생성
+        const StatusListComponent = filesForUpload.endMsg.map(getUploadStatusItem);
         const onHideEvent = () => {
             window.location.replace(`/storage?id=${directoryId}`);
         }
@@ -125,6 +161,9 @@ const FileUploadModal = (props) => {
                     <Modal.Title>파일 업로드</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <div>
+                        {StatusListComponent}
+                    </div>
                     <p>업로드를 완료했습니다.</p>
                 </Modal.Body>
                 <Modal.Footer>
