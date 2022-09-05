@@ -60,7 +60,7 @@ const SearchPage = () => {
                             <Title>Search</Title>
                             <MainFullLine />
                             <SearchComponent />
-                            <StorageListComponent />
+                            <StorageListComponent showRoot={true} />
                         </DesktopCenterLayer>
                         <DesktopRightLayer>
                             <FileStatusComponent />
