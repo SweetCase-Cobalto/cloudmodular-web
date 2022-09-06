@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getUserInfoByID, getDataListByRoot, getDataInfoByID, getFavoriteDatas, searchData } from "../../util/apis"
+import { getUserInfoByID, getDataListByRoot, getDataInfoByID, getFavoriteDatas, searchData, downloadData } from "../../util/apis"
+import { splitDirectoryRoot } from "../../util/tools";
 import { serverUrl } from "../../variables/urls";
 
 export const receiveDataForStoragePage = async (token, userId, rootId) => {
@@ -96,5 +97,47 @@ export const getDirectoryIDForMoveByTag = async (token, user, root, name) => {
     }).catch((err) => {
         return {err: err.response.status, message: err.response.statusText};
     });
+    return data;
+}
+
+export const downloadDataFromStorage = async (token, userId, userName, rootName, targetIds) => {
+    /*
+        파일 다운하기
+        token: 토큰
+        userName: 다운로드 대상의 사용자 이름
+        rootName: 디렉토리 이름
+        targetIds: 다운로드 대상 targetIds
+    */
+
+    // 루트 디렉토리 ID를 검색하기 위한 분리화
+    let _res = splitDirectoryRoot(rootName);
+    const root = _res[0] + '/', name = _res[1].slice(1);
+    let directoryId = -1;
+    if (rootName === '/') {
+        // 최상위 디렉토리는 검색할 필요가 없음
+        directoryId = 0;
+    } else {
+        let apiResult =  await searchData(token, {
+            user: userName,
+            root: root,
+            word: name,
+        });
+        if (apiResult.err !== 200) return apiResult;
+        const _func = () => {
+            let p = -1;
+            for(let i = 0; i < apiResult.data.length; i++) {
+                if (apiResult.data[i].name === name && apiResult.data[i].is_dir) {
+                    p = apiResult.data[i].id;
+                    break;
+                }
+            }
+            return p;
+        }
+        directoryId = _func();
+    }
+    if (directoryId === -1) return {err: 404, data: "해당 디렉토리가 존재하지 않습니다."};
+
+
+    let data = await downloadData(token, userId, directoryId, targetIds);
     return data;
 }

@@ -63,7 +63,7 @@ const SearchPage = () => {
                             <StorageListComponent showRoot={true} />
                         </DesktopCenterLayer>
                         <DesktopRightLayer>
-                            <FileStatusComponent />
+                            <FileStatusComponent allowDownload={false} />
                         </DesktopRightLayer>
                     </div>
                 </Desktop>

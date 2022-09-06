@@ -12,24 +12,31 @@ import { AccessedButton, AccessedOutlinedButton, CanceledOutlinedButton, DangerO
 import ChangeDataNameModal from "./ChangeDataNameModal";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-import { downloadData, setSharingToData, unsetSharingToData, getInfoSharedDataBySharedId } from "../../../util/apis";
+import { downloadDataFromStorage } from "../api";
+import { setSharingToData, unsetSharingToData, getInfoSharedDataBySharedId } from "../../../util/apis";
 import { Modal } from "react-bootstrap";
 import { Desktop } from "../../../components/common/ScreenResponsive";
 import { unsecuredCopyToClipboard } from "../../../util/tools";
 
-const downloadEvent = (token, userId, fileData) => {
-    downloadData(token, userId, fileData.id)
+const downloadFilesEvent = (token, userId, userName, rootName, targets) => {
+    // 파일 다운로드 이벤트
+    const targetIds = targets.map((target) => target.id);
+    downloadDataFromStorage(token, userId, userName, rootName, targetIds)
     .then((res) => {
-        if(res.err === 200) {
-            // 다운로드
+        if (res.err === 200) {
+            // 다운로드 가능
             const response = res.data;
-            if(!fileData.isDir) fileDownload(response, fileData.name);
-            else fileDownload(response, `${fileData.name}.zip`);
+            if(targets.length > 1) fileDownload(response, 'datas.zip');
+            else if (targets[0].isDir) fileDownload(response, `${targets[0].name}.zip`);
+            else fileDownload(response, targets[0].name);
         } else {
-            // 에러
-            alert(res.data)
+            // 다운로드 불가능
+            alert(res.data);
         }
-    })
+    }).catch(() => {
+        // 알 수 없는 에러
+        alert('Unknown Error');
+    });
 }
 
 const FileStatusNoSelected = () => {
@@ -44,10 +51,12 @@ const FileStatusOneSelected = () => {
     // 하나 선택한 경우
     const [cookie, ,] = useCookies(["token", "user_id"]);
     const currentDir = useSelector(state => state.storageResult);
+    const myAccount = useSelector(state => state.myAccount);
     const selectedIdxs = currentDir.selectedIdxs;
     const targetIdx = Array.from(selectedIdxs)[0];
     const targetFile = currentDir.dataList[targetIdx];
     const sharedId = parseInt(targetFile.sharedId);
+
     // Image
     const ImageComponent = targetFile.isDir ? DirectoryOnlyImage : FileOnlyImage;
     const altMsg = targetFile.isDir ? "directory" : "file";
@@ -61,7 +70,6 @@ const FileStatusOneSelected = () => {
         const urlHead = `${splited[0]}://`;
         const hostUrl = document.location.href.split('/')[2];
         const sharedUrl = `${urlHead}${hostUrl}/storage/share/${sharedId}`;
-
 
         const unsetSharedEvent = () => {
             unsetSharingToData(cookie.token, cookie.user_id, targetFile.id)
@@ -167,7 +175,7 @@ const FileStatusOneSelected = () => {
                 <SharedComponent />
                 <AccessedButton
                     style={{ width: "100%", "marginTop": "10px" }}
-                    onClick={() => downloadEvent(cookie.token, cookie.user_id, targetFile)}
+                    onClick={() => {downloadFilesEvent(cookie.token, cookie.user_id, myAccount.name, targetFile.root, [targetFile]);}}
                 >
                     다운로드
                 </AccessedButton>
@@ -183,10 +191,13 @@ const FileStatusOneSelected = () => {
     );
 }
 
-const FileStatusMultipleSelected = () => {
+const FileStatusMultipleSelected = (props) => {
     // 여러개 선택한 경우
     const currentDir = useSelector(state => state.storageResult);
+    const myAccount = useSelector(state => state.myAccount);
+    const [cookie, ,] = useCookies(["token", "user_id"]);
     const selectedIdxs = currentDir.selectedIdxs;
+    const allowDownload = props.allowDownload;  // 여러개 다운로드가 허용되는 경우는 StoragePage뿐이다
     // 파일/디렉토리 갯수 구하기
     let fileNum = 0, directoryNum = 0;
 
@@ -195,6 +206,19 @@ const FileStatusMultipleSelected = () => {
         else fileNum++;
     });
 
+    const DownloadButton = () => {
+        // 다중 선택 다운로드 버튼
+        return (<AccessedButton
+            style={{ width: "100%", "marginTop": "10px" }}
+            onClick = {() => {
+                const targets = Array.from(selectedIdxs).map((idx) => currentDir.dataList[idx]);
+                downloadFilesEvent(cookie.token, cookie.user_id, myAccount.name, targets[0].root, targets);
+            }}
+        >
+            다운로드
+        </AccessedButton>);
+    }
+
     if(directoryNum === 0) {
         // 파일 여러개 선택
         return (
@@ -202,6 +226,7 @@ const FileStatusMultipleSelected = () => {
                 <center>
                     <img alt="file only" src={FilesImage} height="100px" />
                     <p style={{ marginTop: "20px" }}>파일 {fileNum}개 선택됨</p>
+                    { allowDownload && <DownloadButton />}
                 </center>
             </Layer>
         );
@@ -212,6 +237,7 @@ const FileStatusMultipleSelected = () => {
                 <center>
                     <img alt="directory only" src={DirectoriesImage} height="100px" />
                     <p style={{ marginTop: "20px" }}>폴더 {directoryNum}개 선택됨</p>
+                    { allowDownload && <DownloadButton />}
                 </center>
             </Layer>
         );
@@ -223,22 +249,23 @@ const FileStatusMultipleSelected = () => {
                     <img alt="all" src={FilesAndDirectoriesImage} height="100px" />
                     <p style={{ marginTop: "20px" }}>폴더 {directoryNum}개 선택됨</p>
                     <p>파일 {fileNum}개 선택됨</p>
+                    { allowDownload && <DownloadButton />}
                 </center>
             </Layer>
         );
     }
 }
 
-const FileStatusComponent = () => {
+const FileStatusComponent = (props) => {
 
     const currentDir = useSelector(state => state.storageResult);
     const selectedIdxs = currentDir.selectedIdxs;
-
+    const allowDownload = props.allowDownload !== undefined ? props.allowDownload : true; // default값은 true
 
     switch (selectedIdxs.size) {
         case 0: return <Desktop><FileStatusNoSelected /></Desktop>
         case 1: return <Desktop><FileStatusOneSelected /></Desktop>
-        default: return <Desktop><FileStatusMultipleSelected /></Desktop>
+        default: return <Desktop><FileStatusMultipleSelected allowDownload={allowDownload}/></Desktop>
     }
 }
 export default FileStatusComponent;

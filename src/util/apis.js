@@ -163,15 +163,19 @@ export const uploadFile = async (token, userId, directoryId, file) => {
     return data;
 }
 
-export const downloadData = async (token, userId, dataId) => {
+export const downloadData = async (token, userId, directoryId, targetIds) => {
+    let paramUrl = '';
+    for(let i = 0; i < targetIds.length; i++) {
+        paramUrl += `ids=${targetIds[i]}`;
+        if (i < targetIds.length-1) paramUrl += '&';
+    }
     let data = await axios({
         method: "get",
-        url: `${serverUrl}/api/users/${userId}/datas/${dataId}`,
+        url: `${serverUrl}/api/users/${userId}/datas/${directoryId}/download?${paramUrl}`,
         headers: {token: token},
-        params: {method: "download"},
-        responseType: "blob"
+        responseType: "blob",
     }).then((res) => {
-        return {err: 200, data: res};
+        return {err: 200, data: res.data};
     }).catch((err) => {
         return {err: err.response.status, data: err.response.data.detail};
     });
