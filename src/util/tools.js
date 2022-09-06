@@ -25,3 +25,22 @@ export const unsecuredCopyToClipboard = (text) => {
     document.body.removeChild(textArea);
     return true;
 }
+
+export const splitDirectoryRoot = (rootName) => {
+    /*
+        String으로 주어진 디렉토리 주소에 대한 정보를 검색할 때 
+        문자열을 쪼갤 때 사용된다.
+        /a/b/c/ 또는 
+        /a/b/, c로 루트와 파일 형태로 나누기
+    */
+
+    // 최상위 루트는 할 의미가 없음
+    if (rootName === '/') return [undefined, '/'];
+    // 맨 끝에서 두번째부터 시작
+    let i = rootName.length - 2;
+    while (i >= 0) if (rootName.charAt(i--) === '/') break;
+    // split
+    const root = rootName.slice(0, i+1);
+    const name = rootName.slice(i+1, -1);
+    return [root, name];
+}

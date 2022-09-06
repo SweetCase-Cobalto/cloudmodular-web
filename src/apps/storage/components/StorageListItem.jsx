@@ -8,7 +8,7 @@ import { selectData, unselectData } from "../../../reducers/storageResult";
 import DirectoryIcon from "../../../asset/directory.svg";
 import FileIcon from "../../../asset/file.svg";
 import { searchData, setDataFavorite, unSetDataFavorite } from "../../../util/apis";
-import { sizeToStr } from "../../../util/tools";
+import { sizeToStr, splitDirectoryRoot } from "../../../util/tools";
 import { CanceledOutlinedButton } from "../../../components/common/Buttons";
 
 const StorageListItem = (props) => {
@@ -61,17 +61,9 @@ const StorageListItem = (props) => {
             // 메인 루트
             window.location.href = `/storage?id=0`;
         } else {
-            let i = 0;
-            for(i = searchRoot.length-2; i >= 0; i--) {
-                /*
-                    맨 끝에서부터 /가 만나는 지점 까지가 이름 부분이고
-                    그 앞부분은 루트 부분이다.
-                */
-                if(searchRoot.charAt(i) === '/') break;
-            }
-            let name = searchRoot.slice(i+1, -1);
-            let root = searchRoot.slice(0, i+1);
-            // 디렉토리를 검색하기 위한 Param 세팅
+            const _res = splitDirectoryRoot(searchRoot);
+            const name = _res[0];
+            const root = _res[1];
             const param = {
                 user: user.name,
                 word: name,
