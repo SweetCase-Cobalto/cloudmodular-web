@@ -62,8 +62,8 @@ const StorageListItem = (props) => {
             window.location.href = `/storage?id=0`;
         } else {
             const _res = splitDirectoryRoot(searchRoot);
-            const name = _res[0];
-            const root = _res[1];
+            const name = _res[1];
+            const root = _res[0];
             const param = {
                 user: user.name,
                 word: name,

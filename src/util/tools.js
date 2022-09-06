@@ -32,6 +32,8 @@ export const splitDirectoryRoot = (rootName) => {
         문자열을 쪼갤 때 사용된다.
         /a/b/c/ 또는 
         /a/b/, c로 루트와 파일 형태로 나누기
+
+        /p/
     */
 
     // 최상위 루트는 할 의미가 없음
@@ -41,6 +43,6 @@ export const splitDirectoryRoot = (rootName) => {
     while (i >= 0) if (rootName.charAt(i--) === '/') break;
     // split
     const root = rootName.slice(0, i+1);
-    const name = rootName.slice(i+1, -1);
-    return [root, name];
+    const name = rootName.slice(i+2, -1);
+    return [root+'/', name];
 }

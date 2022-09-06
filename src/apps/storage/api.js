@@ -111,7 +111,7 @@ export const downloadDataFromStorage = async (token, userId, userName, rootName,
 
     // 루트 디렉토리 ID를 검색하기 위한 분리화
     let _res = splitDirectoryRoot(rootName);
-    const root = _res[0] + '/', name = _res[1].slice(1);
+    const root = _res[0], name = _res[1];
     let directoryId = -1;
     if (rootName === '/') {
         // 최상위 디렉토리는 검색할 필요가 없음
